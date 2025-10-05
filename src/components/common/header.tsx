@@ -38,6 +38,21 @@ const Header = () => {
     return () => window.removeEventListener('keydown', handleKey);
   }, []);
 
+  useEffect(() => {
+    if (menuOpen) {
+      // Prevent scroll
+      document.body.style.overflow = 'hidden';
+    } else {
+      // Restore scroll
+      document.body.style.overflow = '';
+    }
+
+    // Cleanup in case component unmounts with menu open
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [menuOpen]);
+
   return (
     <motion.header
       initial={false}
@@ -156,10 +171,10 @@ const Header = () => {
           <motion.div
             key="mobile-menu"
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={{ opacity: 10, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ delay: 0.1, duration: 0.1 }}
-            className="flex flex-col items-center justify-center flex-1 space-y-6 w-full md:hidden mt-8"
+            className="flex flex-col items-center justify-center flex-1 space-y-6 w-full md:hidden "
           >
             {navItems.map(({ name, href }) => (
               <div key={href}>
