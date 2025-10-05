@@ -22,7 +22,7 @@ const HeroSection: FC<HeroSectionProps> = ({ className = '' }) => {
       <div className=" w-full max-w-lg px-1">
         <p
           className="max-w-lg font-bold text-lg mb-10 lg:text-2xl text-white leading-tight text-center px-2
-          drop-shadow-[0_4px_6px_rgba(0,0,0,0.9)]"
+         "
         >
           Flavor-packed snow cones, classic raspas, and cool sweets in a
           laid-back spot
