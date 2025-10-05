@@ -24,8 +24,8 @@ const HeroSection: FC<HeroSectionProps> = ({ className = '' }) => {
           className="max-w-lg font-bold text-lg mb-10 lg:text-2xl text-white leading-tight text-center px-2
           drop-shadow-[0_4px_6px_rgba(0,0,0,0.9)]"
         >
-          Laid-back spot with a varied menu of snow cones, raspas and other
-          sweet treats
+          Flavor-packed snow cones, classic raspas, and cool sweets in a
+          laid-back spot
         </p>
         <div className="gap-2 flex justify-center">
           <Link
