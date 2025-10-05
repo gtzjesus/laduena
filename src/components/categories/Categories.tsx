@@ -56,7 +56,7 @@ const Categories: React.FC<CategoriesProps> = ({ categories }) => {
         {/* ⬅️ Scroll Buttons */}
         <button
           onClick={scrollLeft}
-          className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-flag-red text-flag-blue p-2 "
+          className="absolute left-0 top-1/3 transform -translate-y-1/2 z-10 bg-flag-red text-flag-blue p-2 "
           aria-label="Scroll left"
         >
           ◀
@@ -64,7 +64,7 @@ const Categories: React.FC<CategoriesProps> = ({ categories }) => {
 
         <button
           onClick={scrollRight}
-          className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-flag-red text-flag-blue p-2 "
+          className="absolute right-0 top-1/3 transform -translate-y-1/2 z-10 bg-flag-red text-flag-blue p-2 "
           aria-label="Scroll right"
         >
           ▶
@@ -73,7 +73,7 @@ const Categories: React.FC<CategoriesProps> = ({ categories }) => {
         {/* Scroll Container */}
         <div
           ref={scrollRef}
-          className="flex overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory scrollbar-hide hide-scrollbar"
+          className="flex overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory scrollbar-hide hide-scrollbar "
         >
           {categories.map((category, index) => (
             <motion.div
@@ -85,8 +85,8 @@ const Categories: React.FC<CategoriesProps> = ({ categories }) => {
               viewport={{ once: true }}
             >
               <Link href={`/categories/${category.slug.current}`}>
-                <div className="flex flex-col items-center border-flag-blue p-40 overflow-hidden bg-flag-red">
-                  <div className="relative w-full h-64">
+                <div className="flex flex-col items-center  border-flag-blue  overflow-hidden bg-flag-red">
+                  <div className="w-full flex justify-center ">
                     <Image
                       src={
                         category.image
@@ -94,13 +94,14 @@ const Categories: React.FC<CategoriesProps> = ({ categories }) => {
                           : '/default-image.jpg'
                       }
                       alt={category.title}
-                      fill
-                      className="object-cover"
-                      sizes="100vw"
+                      width={300} // Or adjust to your liking
+                      height={200}
+                      className="object-cover rounded-md"
                       priority
                     />
                   </div>
-                  <h3 className="barlow-condensed-regular text-xs lg:text-sm uppercase tracking-[0.05em] font-bold text-center text-black py-6">
+
+                  <h3 className="barlow-condensed-regular text-xs lg:text-sm uppercase tracking-[0.05em] font-bold text-center text-black py-2">
                     {capitalizeFirstWord(category.title)}
                   </h3>
                 </div>
