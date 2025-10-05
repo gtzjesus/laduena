@@ -102,14 +102,14 @@ const Categories: React.FC<CategoriesProps> = ({ categories }) => {
           {categories.map((category, index) => (
             <motion.div
               key={category._id}
-              className="flex-shrink-0 w-full sm:w-[100%] snap-center"
+              className="flex-shrink-0 w-full sm:w-[100%] snap-center flex justify-center"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: index * 0.05 }}
               viewport={{ once: true }}
             >
               <Link href={`/categories/${category.slug.current}`}>
-                <div className="flex flex-col items-center overflow-hidden bg-flag-red">
+                <div className="flex flex-col items-center overflow-hidden bg-flag-red max-w-xs w-full">
                   <div className="w-full flex justify-center">
                     <Image
                       src={
