@@ -37,7 +37,7 @@ export default function Background() {
       </div>
 
       {/* Optional dark overlay */}
-      <div className="absolute inset-0 bg-black bg-opacity-20 z-0" />
+      <div className="absolute inset-0 bg-black bg-opacity-35 z-0" />
     </div>
   );
 }
