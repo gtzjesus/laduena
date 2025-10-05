@@ -1,177 +1,185 @@
 'use client';
-
-import { useUser } from '@clerk/nextjs';
-import useBasketStore from '../../../store/store'; // Import custom store for basket items
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import clsx from 'clsx';
 import Image from 'next/image';
-import AuthButtons from '../auth/AuthButtons'; // Import the AuthButtons component
-import CartButton from '../basket/CartButton'; // Import CartButton
-import SearchButton from '../search/SearchButton';
+
+const navItems = [
+  { name: 'Home', href: '/' },
+  { name: 'Storages', href: '/storage' },
+  { name: 'Qualify', href: '/qualify' },
+];
 
 const Header = () => {
-  const { user } = useUser();
-  const itemCount = useBasketStore((state) =>
-    state.items.reduce((total, item) => total + item.quantity, 0)
-  );
-
   const pathname = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  // States for managing various UI features
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [windowWidth, setWindowWidth] = useState<number>(0);
 
-  // Client-side mounting
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  // Scroll and resize event handling
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const handleScroll = () => setScrolled(window.scrollY > 50);
-      const handleResize = () => setWindowWidth(window.innerWidth);
-
-      window.addEventListener('scroll', handleScroll);
-      window.addEventListener('resize', handleResize);
-
-      return () => {
-        window.removeEventListener('scroll', handleScroll);
-        window.removeEventListener('resize', handleResize);
-      };
-    }
-  }, []);
-
-  // Close menu on desktop or when pathname changes
-  useEffect(() => {
-    if (windowWidth >= 648) setIsMenuOpen(false);
-  }, [windowWidth]);
+  const logoSrc = scrolled ? '/icons/logo-black.webp' : '/icons/logo-pink.webp';
 
   useEffect(() => {
-    setIsMenuOpen(false);
-  }, [pathname]);
-
-  // Disable body scrolling when the mobile menu is open
-  useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = 'hidden';
-      document.documentElement.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-      document.documentElement.style.overflow = 'auto';
-    }
-
-    return () => {
-      document.body.style.overflow = 'auto';
-      document.documentElement.style.overflow = 'auto';
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 0);
     };
-  }, [isMenuOpen]);
 
-  if (!isMounted) return null; // Prevent rendering on server-side
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Escape key closes menu
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMenuOpen(false);
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, []);
 
   return (
-    <header
-      className={`${
-        scrolled ? 'bg-flag-red shadow-lg' : 'bg-transparent'
-      } fixed top-0 z-20 flex items-center px-4 py-3 w-full transition-all duration-300 ease-in-out`}
+    <motion.header
+      initial={false}
+      animate={{
+        height: menuOpen ? '100vh' : '48px',
+      }}
+      transition={{ duration: 0.4 }}
+      className={clsx(
+        'fixed top-0 z-30 px-4 py-2.5 w-full overflow-hidden flex flex-col items-center transition-colors duration-300',
+        menuOpen
+          ? 'bg-flag-red text-white'
+          : scrolled
+            ? 'bg-flag-red text-white shadow-md '
+            : 'bg-transparent text-white ',
+        menuOpen ? 'justify-start' : 'justify-between'
+      )}
     >
-      <div className="flex w-full items-center justify-between">
-        {/* Left side: Logo and Company Name */}
-        <div className="flex items-center space-x-4 flex-1">
-          <Link href="/" className="font-bold cursor-pointer sm:mx-0 sm:hidden">
-            <Image
-              src={scrolled ? '/icons/logo.webp' : '/icons/logo.webp'}
-              alt="worldhello"
-              width={50}
-              height={50}
-              className="w-7 h-7"
-              priority
-            />
-          </Link>
-          <div className="hidden sm:flex items-center space-x-2">
-            <Link href="/">
-              <Image
-                src={scrolled ? '/icons/logo.webp' : '/icons/logo.webp'}
-                alt="worldhello"
-                width={30}
-                height={30}
-                priority
-              />
-            </Link>
-            <Link
-              href="/"
-              className={`uppercase barlow-condensed-regular text-sm ${
-                scrolled ? 'text-white' : 'text-white'
-              }`}
-            >
-              laduena
-            </Link>
-          </div>
-        </div>
+      {/* Top Row - Logo & Menu Button */}
+      <div className="w-full flex justify-between items-center md:hidden">
+        <Link href="/" className="relative w-[20px] h-[20px]">
+          <Image
+            src={logoSrc}
+            alt="Logo"
+            fill
+            priority
+            className={clsx('object-contain', menuOpen && 'invisible')}
+          />
+        </Link>
 
-        {/* Right side: Search, Cart, and Auth Buttons */}
-        <div className="flex items-center space-x-5 font-bold px-5">
-          <SearchButton scrolled={scrolled} />
-          {/* Conditionally render CartButton only if the pathname is not '/basket' */}
-          {pathname !== '/basket' && (
-            <CartButton itemCount={itemCount} scrolled={scrolled} />
+        <h1
+          className={clsx(
+            '   uppercase font-light text-sm leading-tight text-center',
+            scrolled ? ' text-black ' : ' text-black invisible',
+            menuOpen ? 'invisible' : 'justify-between'
           )}
-          <div
-            className={`hidden sm:flex items-center ${scrolled ? 'text-white' : 'text-white'}`}
+        ></h1>
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+        >
+          {menuOpen ? (
+            <svg
+              className={clsx(
+                'h-6 w-6',
+                scrolled ? 'text-black' : 'text-black'
+              )}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          ) : (
+            <svg
+              className={clsx(
+                'h-6 w-6',
+                scrolled ? 'text-black' : 'text-black'
+              )}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          )}
+        </button>
+      </div>
+
+      {/* Desktop Nav (optional future use) */}
+      <div className="hidden md:flex items-center justify-between w-full px-5">
+        <div className="flex items-center space-x-4">
+          <Link href="/">
+            <Image src={logoSrc} alt="Logo" width={25} height={25} />
+          </Link>
+          <h1
+            className={clsx(
+              '   mt-1 uppercase font-light text-xs leading-tight text-center',
+              scrolled ? ' text-black' : ' text-black',
+              menuOpen ? 'invisible' : 'justify-between'
+            )}
           >
-            <AuthButtons user={user ?? null} />
-          </div>
+            La Hacienda del norte
+          </h1>
         </div>
 
-        {/* Mobile Menu Button */}
-        <button
-          onClick={() => setIsMenuOpen((prev) => !prev)}
-          className="sm:hidden flex flex-col justify-center items-center space-y-1 z-30 relative group"
-        >
-          {/* Top Bar (first line) */}
-          <div
-            className={`w-5 h-0.5 ${scrolled ? 'bg-white' : 'bg-white'} transition-all duration-300 ease-in-out transform ${
-              isMenuOpen ? 'rotate-45 translate-y-0.5' : ''
-            }`}
-          />
-          {/* Bottom Bar (third line) */}
-          <div
-            className={`w-5 h-0.5 ${scrolled ? 'bg-white' : 'bg-white'} transition-all duration-300 ease-in-out transform ${
-              isMenuOpen ? '-rotate-45 -translate-y-0.5' : ''
-            }`}
-          />
-        </button>
-      </div>
-
-      {/* Mobile Menu Overlay */}
-      <div
-        className={`fixed inset-0 bg-flag-red bg-opacity-100 z-10 transition-opacity duration-300 ${
-          isMenuOpen ? 'opacity-95' : 'opacity-0 pointer-events-none'
-        }`}
-        onClick={() => setIsMenuOpen(false)}
-      />
-      {/* Mobile Menu */}
-      <div
-        className={`fixed right-0 top-0 h-full w-full shadow-xl z-20 transform transition-opacity duration-300 ease-in-out ${
-          isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-        }`}
-      >
-        <button
-          onClick={() => setIsMenuOpen(false)}
-          className="absolute top-3.5 right-8 text-lg text-white"
-        >
-          {isMenuOpen ? '' : <span className="text-white"></span>}
-        </button>
-        <div className="flex flex-col items-center  h-full p-20 space-y-6">
-          <div className="flex flex-col items-center space-y-4 text-white text-2xl">
-            <AuthButtons user={user ?? null} />
-          </div>
+        <div className="flex space-x-6 text-md ">
+          {navItems.map(({ name, href }) => (
+            <Link
+              key={href}
+              href={href}
+              className={clsx(
+                'hover:text-gray-200 transition-colors',
+                pathname === href ? 'text-black underline' : '',
+                scrolled ? ' text-black' : ' text-black'
+              )}
+            >
+              {name}
+            </Link>
+          ))}
         </div>
       </div>
-    </header>
+
+      {/* Mobile Nav Items - Animated */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            key="mobile-menu"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ delay: 0.1, duration: 0.1 }}
+            className="flex flex-col items-center justify-center flex-1 space-y-6 w-full md:hidden mt-8"
+          >
+            {navItems.map(({ name, href }) => (
+              <div key={href}>
+                <Link
+                  href={href}
+                  onClick={() => setMenuOpen(false)}
+                  className={clsx(
+                    'text-xl font-semibold transition-colors',
+                    pathname === href ? 'text-black' : 'text-black',
+                    scrolled ? 'text-black ' : '  text-black'
+                  )}
+                >
+                  {name}
+                </Link>
+              </div>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.header>
   );
 };
 
