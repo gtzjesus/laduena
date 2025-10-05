@@ -72,7 +72,7 @@ const Header = () => {
     >
       {/* Top Row - Logo & Menu Button */}
       <div className="w-full flex justify-between items-center md:hidden">
-        <Link href="/" className="relative w-[20px] h-[20px]">
+        <Link href="/" className="relative w-[25px] h-[25px]">
           <Image
             src={logoSrc}
             alt="Logo"
