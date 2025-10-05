@@ -3,7 +3,7 @@
 const PickupLocation = () => {
   return (
     <div
-      className="bg-flag-red max-w-xl mx-auto shadow-md 
+      className="bg-flag-red max-w-md mx-auto shadow-md 
   "
     >
       <h2 className="barlow-condensed-regular text-lg  uppercase font-bold text-center text-black py-4">

@@ -29,18 +29,43 @@ const Categories: React.FC<CategoriesProps> = ({ categories }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scrollLeft = () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollBy({
-        left: -scrollRef.current.offsetWidth,
+    if (!scrollRef.current) return;
+
+    const container = scrollRef.current;
+    const scrollAmount = container.offsetWidth;
+
+    if (container.scrollLeft === 0) {
+      // Jump to end if at start
+      container.scrollTo({
+        left: container.scrollWidth,
+        behavior: 'smooth',
+      });
+    } else {
+      container.scrollBy({
+        left: -scrollAmount,
         behavior: 'smooth',
       });
     }
   };
 
   const scrollRight = () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollBy({
-        left: scrollRef.current.offsetWidth,
+    if (!scrollRef.current) return;
+
+    const container = scrollRef.current;
+    const scrollAmount = container.offsetWidth;
+    const atEnd =
+      container.scrollLeft + container.offsetWidth >=
+      container.scrollWidth - 10;
+
+    if (atEnd) {
+      // Jump to start if at end
+      container.scrollTo({
+        left: 0,
+        behavior: 'smooth',
+      });
+    } else {
+      container.scrollBy({
+        left: scrollAmount,
         behavior: 'smooth',
       });
     }
@@ -48,32 +73,31 @@ const Categories: React.FC<CategoriesProps> = ({ categories }) => {
 
   return (
     <div className="w-full mx-auto bg-gradient-to-br from-flag-red via-transparent to-flag-red relative">
-      <h2 className="barlow-condensed-regular text-lg  uppercase font-bold text-center text-black py-6">
+      <h2 className="barlow-condensed-regular text-lg uppercase font-bold text-center text-black py-6">
         Browse Snack Action
       </h2>
 
       <div className="max-w-xl mx-auto relative">
-        {/* ⬅️ Scroll Buttons */}
+        {/* Buttons */}
         <button
           onClick={scrollLeft}
-          className="absolute left-0 top-1/3 transform -translate-y-1/2 z-10 bg-transparent text-flag-blue p-2 "
+          className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-transparent text-flag-blue p-2"
           aria-label="Scroll left"
         >
           ◀
         </button>
-
         <button
           onClick={scrollRight}
-          className="absolute right-0 top-1/3 transform -translate-y-1/2 z-10 bg-transparent text-flag-blue p-2 "
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-transparent text-flag-blue p-2"
           aria-label="Scroll right"
         >
           ▶
         </button>
 
-        {/* Scroll Container */}
+        {/* Scrollable container with swipe support */}
         <div
           ref={scrollRef}
-          className="flex overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory scrollbar-hide hide-scrollbar "
+          className="flex overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory scrollbar-hide hide-scrollbar space-x-4 px-4"
         >
           {categories.map((category, index) => (
             <motion.div
@@ -85,8 +109,8 @@ const Categories: React.FC<CategoriesProps> = ({ categories }) => {
               viewport={{ once: true }}
             >
               <Link href={`/categories/${category.slug.current}`}>
-                <div className="flex flex-col items-center  border-flag-blue  overflow-hidden bg-flag-red">
-                  <div className="w-full flex justify-center ">
+                <div className="flex flex-col items-center overflow-hidden bg-flag-red">
+                  <div className="w-full flex justify-center">
                     <Image
                       src={
                         category.image
@@ -94,13 +118,12 @@ const Categories: React.FC<CategoriesProps> = ({ categories }) => {
                           : '/default-image.jpg'
                       }
                       alt={category.title}
-                      width={300} // Or adjust to your liking
+                      width={300}
                       height={200}
                       className="object-cover rounded-md"
                       priority
                     />
                   </div>
-
                   <h3 className="barlow-condensed-regular text-xs lg:text-sm uppercase tracking-[0.05em] font-bold text-center text-black py-2">
                     {capitalizeFirstWord(category.title)}
                   </h3>
