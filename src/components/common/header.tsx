@@ -99,7 +99,7 @@ const Header = () => {
             <svg
               className={clsx(
                 'h-6 w-6',
-                scrolled ? 'text-black' : 'text-black'
+                scrolled ? 'text-black' : 'text-white'
               )}
               fill="none"
               stroke="currentColor"
@@ -125,11 +125,11 @@ const Header = () => {
           <h1
             className={clsx(
               '   mt-1 uppercase font-light text-xs leading-tight text-center',
-              scrolled ? ' text-black' : ' text-black',
+              scrolled ? ' text-black' : ' text-white',
               menuOpen ? 'invisible' : 'justify-between'
             )}
           >
-            La Hacienda del norte
+            La Dueña
           </h1>
         </div>
 
@@ -141,7 +141,7 @@ const Header = () => {
               className={clsx(
                 'hover:text-gray-200 transition-colors',
                 pathname === href ? 'text-black underline' : '',
-                scrolled ? ' text-black' : ' text-black'
+                scrolled ? ' text-black' : ' text-white'
               )}
             >
               {name}

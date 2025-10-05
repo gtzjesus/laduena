@@ -16,12 +16,10 @@ const HeroSection: FC<HeroSectionProps> = ({ className = '' }) => {
       <h1
         className="uppercase font-bold text-5xl lg:text-8xl text-white leading-tight text-center px-1 
           drop-shadow-[0_4px_6px_rgba(0,0,0,0.9)]"
-      >
-        La Dueña
-      </h1>
+      ></h1>
 
       {/* Buttons near the bottom with solid background & shadow */}
-      <div className=" w-full max-w-lg px-1 mb-20">
+      <div className=" w-full max-w-lg px-1">
         <p
           className="max-w-lg font-bold text-lg mb-10 lg:text-2xl text-white leading-tight text-center px-2
           drop-shadow-[0_4px_6px_rgba(0,0,0,0.9)]"
