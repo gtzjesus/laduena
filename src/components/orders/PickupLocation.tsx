@@ -3,11 +3,11 @@
 const PickupLocation = () => {
   return (
     <div
-      className="bg-white shadow-md p-4 my-4 
+      className="bg-flag-red max-w-xl mx-auto shadow-md p-4 my-4 
   "
     >
-      <h2 className="text-sm uppercase text-flag-blue mb-2">
-        El paso kaboom pickup location
+      <h2 className="barlow-condensed-regular text-lg  uppercase font-bold text-center text-black py-6">
+        Our Location
       </h2>
 
       <div className="w-full h-64 overflow-hidden">
@@ -26,7 +26,7 @@ const PickupLocation = () => {
         href="https://www.google.com/maps/dir/?api=1&destination=531+Talbot+Ave,+Canutillo,+TX+79835"
         target="_blank"
         rel="noopener noreferrer"
-        className="my-4 uppercase text-sm block w-full text-center bg-flag-blue text-white font-semibold py-2 transition"
+        className="my-4 uppercase text-xs block w-full text-center bg-flag-blue text-white font-semibold py-2 transition"
       >
         Get Directions
       </a>

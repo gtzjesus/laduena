@@ -27,24 +27,24 @@ interface CategoriesProps {
 const Categories: React.FC<CategoriesProps> = ({ categories }) => {
   return (
     <div className="w-full mx-auto bg-gradient-to-br from-flag-red via-transparent to-flag-red">
-      <h2 className="barlow-condensed-regular text-lg lg:text-2xl uppercase font-bold text-center text-black py-6">
-        Snack Action
+      <h2 className="barlow-condensed-regular text-lg  uppercase font-bold text-center text-black py-6">
+        Browse Snack Action
       </h2>
 
-      <div className="px-4 max-w-5xl mx-auto">
+      <div className="px-20 max-w-xl mx-auto">
         {/* Scroll Container */}
         <div className="flex overflow-x-auto scroll-smooth snap-x snap-mandatory  scrollbar-hide hide-scrollbar">
           {categories.map((category, index) => (
             <motion.div
               key={category._id}
-              className="flex-shrink-0 w-full sm:w-[100%] md:w-[50%] lg:w-[50%] xl:w-[50%] snap-center"
+              className="flex-shrink-0 w-full sm:w-[100%]  snap-center"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: index * 0.05 }}
               viewport={{ once: true }}
             >
               <Link href={`/categories/${category.slug.current}`}>
-                <div className="flex flex-col items-center border border-opacity-25 border-flag-blue pt-10 px-20  overflow-hidden bg-flag-red transition-transform duration-300">
+                <div className="flex flex-col items-center border border-opacity-25 border-flag-blue p-20  overflow-hidden bg-flag-red transition-transform duration-300">
                   <div className="relative w-full h-64 ">
                     <Image
                       src={
@@ -59,7 +59,7 @@ const Categories: React.FC<CategoriesProps> = ({ categories }) => {
                       priority
                     />
                   </div>
-                  <h3 className="barlow-condensed-regular text-xs lg:text-xl uppercase tracking-[0.05em] font-bold text-center text-black py-6">
+                  <h3 className="barlow-condensed-regular text-xs lg:text-sm uppercase tracking-[0.05em] font-bold text-center text-black py-6">
                     {capitalizeFirstWord(category.title)}
                   </h3>
                 </div>
