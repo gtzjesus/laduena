@@ -16,13 +16,15 @@ const HeroSection: FC<HeroSectionProps> = ({ className = '' }) => {
       <h1
         className="uppercase font-bold text-5xl lg:text-8xl text-white leading-tight text-center px-1 
           drop-shadow-[0_4px_6px_rgba(0,0,0,0.9)]"
-      ></h1>
+      >
+        La Dueña
+      </h1>
 
       {/* Buttons near the bottom with solid background & shadow */}
       <div className=" w-full max-w-lg px-1">
         <p
-          className="max-w-lg font-bold text-lg mb-10 lg:text-4xl text-white leading-tight text-center px-2
-         "
+          style={{ textShadow: '0 2px 4px rgba(0, 0, 0, 0.5)' }}
+          className="max-w-lg font-bold text-lg mb-10 lg:text-4xl text-white leading-tight text-center px-2"
         >
           Snow cones, classic raspas, and cool sweets - all in a laid-back spot
         </p>
