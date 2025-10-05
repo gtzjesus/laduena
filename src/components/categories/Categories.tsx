@@ -56,7 +56,7 @@ const Categories: React.FC<CategoriesProps> = ({ categories }) => {
         {/* ⬅️ Scroll Buttons */}
         <button
           onClick={scrollLeft}
-          className="absolute left-0 top-1/3 transform -translate-y-1/2 z-10 bg-flag-red text-flag-blue p-2 "
+          className="absolute left-0 top-1/3 transform -translate-y-1/2 z-10 bg-transparent text-flag-blue p-2 "
           aria-label="Scroll left"
         >
           ◀
@@ -64,7 +64,7 @@ const Categories: React.FC<CategoriesProps> = ({ categories }) => {
 
         <button
           onClick={scrollRight}
-          className="absolute right-0 top-1/3 transform -translate-y-1/2 z-10 bg-flag-red text-flag-blue p-2 "
+          className="absolute right-0 top-1/3 transform -translate-y-1/2 z-10 bg-transparent text-flag-blue p-2 "
           aria-label="Scroll right"
         >
           ▶
