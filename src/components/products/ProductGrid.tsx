@@ -16,7 +16,7 @@ import { Product } from '@/types';
  */
 function ProductGrid({ products }: { products: Product[] }) {
   return (
-    <div className="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-0 divide-x divide-y bg-white">
+    <div className="w-full grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-0 divide-x divide-y">
       {products?.map((product) => (
         <AnimatePresence key={product._id}>
           <motion.div

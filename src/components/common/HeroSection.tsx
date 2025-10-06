@@ -28,7 +28,7 @@ const HeroSection: FC<HeroSectionProps> = ({ className = '' }) => {
         </p>
         <div className="gap-2 flex justify-center lg:mb-[75%]">
           <Link
-            href="/storage"
+            href="/menu"
             className=" bg-opacity-90 border border-flag-red bg-flag-red text-black px-5 py-4 text-center  rounded-3xl text-xs font-bold transition duration-200 ease-in-out shadow-lg w-full max-w-[180px] hover:bg-opacity-100  drop-shadow-[0_4px_6px_rgba(0,0,0,0.9)]"
           >
             View Menu
