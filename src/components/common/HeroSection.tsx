@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { FC } from 'react';
-import OpeningHours from './OpeningHours';
+import OpeningHours from '../hours/OpeningHours';
 
 interface HeroSectionProps {
   className?: string;
@@ -26,7 +26,7 @@ const HeroSection: FC<HeroSectionProps> = ({ className = '' }) => {
         <p className="max-w-lg font-bold text-lg mb-10 lg:text-4xl text-white leading-tight text-center px-2 ">
           Snow cones, classic raspas, and cool sweets - all in a laid-back spot
         </p>
-        <div className="gap-2 flex justify-center lg:mb-[75%]">
+        <div className="gap-2 flex justify-center lg:mb-[50%]">
           <Link
             href="/menu"
             className=" bg-opacity-90 border border-flag-red bg-flag-red text-black px-5 py-4 text-center  rounded-3xl text-xs font-bold transition duration-200 ease-in-out shadow-lg w-full max-w-[180px] hover:bg-opacity-100  drop-shadow-[0_4px_6px_rgba(0,0,0,0.9)]"
@@ -34,7 +34,7 @@ const HeroSection: FC<HeroSectionProps> = ({ className = '' }) => {
             View Menu
           </Link>
           <Link
-            href="/qualify"
+            href="/hours"
             className=" bg-opacity-90 border border-white px-5 py-4 text-center  rounded-3xl text-xs font-bold transition duration-200 ease-in-out shadow-lg text-white w-full max-w-[180px] hover:bg-opacity-100  drop-shadow-[0_4px_6px_rgba(0,0,0,0.9)]"
           >
             See Hours

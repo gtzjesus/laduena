@@ -3,15 +3,15 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 
-export default function Background() {
+export default function HoursBackground() {
   const [loaded, setLoaded] = useState(false);
 
   return (
-    <div className="relative w-full h-screen overflow-hidden">
+    <div className="fixed inset-0 -z-20 w-full h-full overflow-hidden">
       {/* Mobile Background */}
-      <div className="block lg:hidden absolute inset-0 -z-10">
+      <div className="block lg:hidden absolute inset-0">
         <Image
-          src="/images/elpaso.webp"
+          src="/images/hours-background.webp"
           alt="Background mobile"
           fill
           quality={100}
@@ -23,9 +23,9 @@ export default function Background() {
       </div>
 
       {/* Desktop Background */}
-      <div className="hidden lg:block absolute inset-0 -z-10">
+      <div className="hidden lg:block absolute inset-0">
         <Image
-          src="/images/elpaso.webp"
+          src="/images/hours-background.webp"
           alt="Background desktop"
           fill
           quality={100}
@@ -37,7 +37,7 @@ export default function Background() {
       </div>
 
       {/* Optional dark overlay */}
-      <div className="absolute inset-0 bg-black bg-opacity-50 z-0" />
+      <div className="absolute inset-0 bg-black bg-opacity-50" />
     </div>
   );
 }
