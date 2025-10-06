@@ -14,7 +14,7 @@ function ProductGrid({ products }: { products: Product[] }) {
   }
 
   return (
-    <div className="w-full space-y-4">
+    <div className="w-full flex justify-center flex-col space-y-4 max-w-2xl mx-auto">
       {chunks.map((chunk, index) => {
         // Every 3rd chunk (index 2, 5, 8, ...) shows only 1 product full width
         const isSingle = (index + 1) % 3 === 0;
