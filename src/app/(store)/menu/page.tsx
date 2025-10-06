@@ -32,7 +32,6 @@ export const metadata: Metadata = {
  */
 export default async function MenuPage() {
   const products = await getAllProducts();
-  console.log('Fetched products:', products);
   const categories = await getAllCategories();
 
   return (
@@ -41,7 +40,7 @@ export default async function MenuPage() {
         <Header />
       </div>
 
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto">
         <ProductsView products={products} categories={categories} />
       </div>
     </>
