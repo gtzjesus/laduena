@@ -46,6 +46,7 @@
     "react-dropzone": "^14.3.8",
     "recharts": "^2.15.3",
     "sanity": "^3.65.1",
+    "smoothscroll-polyfill": "^0.4.4",
     "sonner": "^2.0.5",
     "stripe": "^17.4.0",
     "styled-components": "^6.1.13",

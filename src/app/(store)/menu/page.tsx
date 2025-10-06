@@ -1,14 +1,9 @@
-// app/(store)/menu/page.tsx
-
 import { getAllCategories } from '@/sanity/lib/products/getAllCategories';
 import ProductsView from '@/components/products/ProductsView';
 import Header from '@/components/common/header';
 import type { Metadata } from 'next';
 import { getAllProducts } from '@/sanity/lib/products/getAllProducts';
 
-/**
- * Metadata for the Menu Page
- */
 export const metadata: Metadata = {
   title: 'Menu - La Dueña',
   description:
@@ -26,10 +21,6 @@ export const metadata: Metadata = {
   },
 };
 
-/**
- * MenuPage Component
- * Displays all products from all categories
- */
 export default async function MenuPage() {
   const products = await getAllProducts();
   const categories = await getAllCategories();

@@ -11,7 +11,6 @@ const ALL_PRODUCTS_QUERY = defineQuery(`
     _rev,
     name,
     slug,
-    price,
     image{
       _type,
       asset->{
@@ -19,6 +18,11 @@ const ALL_PRODUCTS_QUERY = defineQuery(`
         _type,
         url
       }
+    },
+    variants[]{
+      size,
+      price,
+      stock
     },
     category->{
       title,

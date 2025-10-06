@@ -39,7 +39,11 @@ function ProductThumb({ product }: { product: Product }) {
   // Safely extract product properties
   const productName = product.name || 'Unnamed Product';
   const productSlug = product.slug?.current || '';
-  const productPrice = product.price || 0;
+  const productPrice =
+    product.variants?.find((v) => v.size === 'Small')?.price ??
+    product.variants?.[0]?.price ??
+    null;
+
   const isOutOfStock = product.stock != null && product.stock <= 0;
 
   // Safely generate image URL
@@ -99,7 +103,7 @@ function ProductThumb({ product }: { product: Product }) {
         </h2>
 
         <p className="uppercase text-xs font-light text-center text-gray-800">
-          ${productPrice.toFixed(0)}
+          {productPrice != null ? `$${productPrice.toFixed(2)}` : 'N/A'}
         </p>
       </div>
     </Link>
