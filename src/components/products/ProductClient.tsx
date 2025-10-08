@@ -1,7 +1,10 @@
-import { useState, useEffect } from 'react';
+'use client';
+
+import { useState } from 'react';
 import AddToBasketButton from '@/components/basket/AddToBasketButton';
-import CartPopup from '../basket/CartPopUp';
-import { Product, Variant } from '@/types'; // assuming you have Variant type
+import CartPopup from '@/components/basket/CartPopUp';
+import { Product, Variant } from '@/types';
+import VariantSelector from '@/components/variants/VariantSelector';
 
 interface ProductClientProps {
   product: Product;
@@ -13,33 +16,32 @@ const ProductClient: React.FC<ProductClientProps> = ({
   isOutOfStock,
 }) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
-
-  // Add this state to track selectedVariant
-  const [selectedVariant, setSelectedVariant] = useState<Variant | null>(null);
-
-  useEffect(() => {
-    // On mount or product change, set default selected variant (e.g., first available)
-    if (product.variants && product.variants.length > 0) {
-      // Example: pick first variant in stock, or just first variant
-      const available = product.variants.find((v) => (v.stock ?? 0) > 0);
-      setSelectedVariant(available || product.variants[0]);
-    }
-  }, [product]);
+  const [selectedVariant, setSelectedVariant] = useState<Variant | null>(null); // ✅
 
   const openCart = () => setIsCartOpen(true);
   const closeCart = () => setIsCartOpen(false);
 
-  // If no variant selected or product out of stock, disable AddToBasketButton
-  const disableAddToBasket = isOutOfStock || !selectedVariant;
-
   return (
     <div>
-      <AddToBasketButton
-        product={product}
-        variant={selectedVariant!} // non-null assertion because we checked above
-        onAddedToBag={openCart}
-        disabled={disableAddToBasket}
-      />
+      {/* Render the variant selector */}
+      {product.variants?.length ? (
+        <VariantSelector
+          variants={product.variants}
+          onVariantChange={setSelectedVariant}
+        />
+      ) : (
+        <p>No variants available</p>
+      )}
+
+      {/* Render Add to Basket Button only if a variant is selected */}
+      {selectedVariant && (
+        <AddToBasketButton
+          product={product}
+          variant={selectedVariant}
+          onAddedToBag={openCart}
+          disabled={isOutOfStock}
+        />
+      )}
 
       {isCartOpen && <CartPopup onClose={closeCart} />}
     </div>

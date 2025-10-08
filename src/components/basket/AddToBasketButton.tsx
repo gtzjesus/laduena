@@ -24,6 +24,7 @@ export default function AddToBasketButton({
     addItemToBasket(product, variant);
 
     onAddedToBag();
+    console.log('Adding to basket:', { product, variant });
   };
 
   return (
@@ -31,13 +32,13 @@ export default function AddToBasketButton({
       type="button"
       onClick={handleClick}
       disabled={disabled}
-      className={`w-full py-3 rounded-md text-white uppercase tracking-wide font-semibold transition ${
+      className={`w-full py-2 rounded-md text-white transition ${
         disabled
           ? 'bg-gray-400 cursor-not-allowed'
-          : 'bg-flag-blue hover:bg-flag-blue-dark'
+          : 'bg-flag-light-blue hover:bg-flag-blue-dark'
       }`}
     >
-      Add to Basket
+      Add to Bag
     </button>
   );
 }

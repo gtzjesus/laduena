@@ -22,6 +22,7 @@ export default function BasketPage() {
   const [isClient, setIsClient] = useState(false);
 
   const { isLoading, reservationError, handleReservation } = useReservation();
+  console.log('Basket items:', groupedItems);
 
   useEffect(() => {
     setIsClient(true);

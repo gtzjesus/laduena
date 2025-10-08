@@ -4,7 +4,7 @@ import { getProductBySlug } from '@/sanity/lib/products/getProductBySlug';
 import { notFound } from 'next/navigation';
 import { imageUrl } from '@/lib/imageUrl';
 import type { Metadata } from 'next';
-import VariantSelector from '@/components/variants/VariantSelector';
+import ProductClient from '@/components/products/ProductClient';
 
 export const dynamic = 'force-static';
 export const revalidate = 60;
@@ -78,24 +78,11 @@ async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 text-flag-blue max-w-7xl mx-auto px-4 py-8">
-        {/* Left: Images + Info */}
-        <div className="relative flex flex-col overflow-y-auto space-y-6">
+        <div className="relative flex flex-col space-y-6">
           <ProductImages product={product} isOutOfStock={isOutOfStock} />
 
-          {/* Render interactive VariantSelector only if variants exist */}
-          {product.variants?.length ? (
-            <VariantSelector variants={product.variants} />
-          ) : (
-            <p>None available.</p>
-          )}
-
-          {isOutOfStock && (
-            <div className="fixed inset-0 z-10 flex items-center justify-center bg-black bg-opacity-40">
-              <span className="text-white font-mono text-sm uppercase">
-                Out of Stock
-              </span>
-            </div>
-          )}
+          {/* The interactive client component */}
+          <ProductClient product={product} isOutOfStock={isOutOfStock} />
         </div>
       </div>
     </div>
