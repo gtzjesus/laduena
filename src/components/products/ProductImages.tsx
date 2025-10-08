@@ -12,38 +12,34 @@ type ProductImagesProps = {
 };
 
 const ProductImages = ({ product, isOutOfStock }: ProductImagesProps) => {
-  // Hooks always first
   const scrollRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Derive images after hooks
   const images = product.extraImages?.length
     ? product.extraImages
     : product.image
       ? [product.image]
       : [];
-  // Register scroll listener once
+
   useEffect(() => {
     const div = scrollRef.current;
     if (!div) return;
+
+    const onScroll = () => {
+      if (!scrollRef.current) return;
+      const scrollLeft = scrollRef.current.scrollLeft;
+      const containerWidth = scrollRef.current.clientWidth;
+      const index = Math.round(scrollLeft / containerWidth);
+      setCurrentIndex(index);
+    };
 
     div.addEventListener('scroll', onScroll, { passive: true });
 
     return () => div.removeEventListener('scroll', onScroll);
   }, []);
-  // Early return AFTER hooks
+
   if (!images.length) return null;
 
-  // Scroll event handler
-  const onScroll = () => {
-    if (!scrollRef.current) return;
-    const scrollLeft = scrollRef.current.scrollLeft;
-    const containerWidth = scrollRef.current.clientWidth;
-    const index = Math.round(scrollLeft / containerWidth);
-    setCurrentIndex(index);
-  };
-
-  // Scroll to selected index function
   const scrollToIndex = (index: number) => {
     if (!scrollRef.current) return;
     const containerWidth = scrollRef.current.clientWidth;
@@ -56,11 +52,13 @@ const ProductImages = ({ product, isOutOfStock }: ProductImagesProps) => {
 
   return (
     <div className="w-full">
+      {/* Fix: Set max-h and prevent vertical overflow */}
       <div
         ref={scrollRef}
-        className={`flex overflow-x-auto scroll-smooth snap-x snap-mandatory hide-scrollbar ${
+        className={`flex overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory hide-scrollbar gap-3 ${
           isOutOfStock ? 'opacity-50' : ''
         }`}
+        style={{ maxHeight: '100vh' }} // Prevent vertical scroll
       >
         {images.map((image, index) => (
           <motion.div
@@ -83,14 +81,14 @@ const ProductImages = ({ product, isOutOfStock }: ProductImagesProps) => {
         ))}
       </div>
 
-      {/* Buttons to navigate images */}
+      {/* Image nav buttons */}
       <div className="flex justify-center mt-5 space-x-4">
         {images.map((_, index) => (
           <button
             key={index}
             onClick={() => scrollToIndex(index)}
             className={`w-2 h-2 rounded-full transition-colors ${
-              index === currentIndex ? 'bg-flag-blue' : 'bg-gray-400'
+              index === currentIndex ? 'bg-flag-blue' : 'bg-gray-300'
             }`}
             aria-label={`View image ${index + 1}`}
             type="button"
