@@ -1,19 +1,24 @@
 // store/store.ts
 
-import { Product, BasketItem } from '@/types';
+import { Product, BasketItem, Variant } from '@/types';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 interface BasketState {
   items: BasketItem[];
 
-  addItem: (product: Product) => void;
-  removeItem: (productId: string) => void;
-  removeAllOfItem: (productId: string) => void;
-  updateItemQuantity: (productId: string, quantity: number) => void;
+  addItem: (product: Product, variant: Variant) => void;
+  removeItem: (productId: string, variantSize: string) => void;
+  removeAllOfItem: (productId: string, variantSize: string) => void;
+  updateItemQuantity: (
+    productId: string,
+    variantSize: string,
+    quantity: number
+  ) => void;
+
   clearBasket: () => void;
   getTotalPrice: () => number;
-  getItemCount: (productId: string) => number;
+  getItemCount: (productId: string, variantSize: string) => number;
   getGroupedItems: () => BasketItem[];
   updateStockLevels: (latestStocks: { _id: string; stock: number }[]) => void;
 }
@@ -23,16 +28,19 @@ const useBasketStore = create<BasketState>()(
     (set, get) => ({
       items: [],
 
-      addItem: (product) =>
+      addItem: (product, variant) =>
         set((state) => {
           const existingItem = state.items.find(
-            (item) => item.product._id === product._id
+            (item) =>
+              item.product._id === product._id &&
+              item.variant.size === variant.size
           );
 
           if (existingItem) {
             return {
               items: state.items.map((item) =>
-                item.product._id === product._id
+                item.product._id === product._id &&
+                item.variant.size === variant.size
                   ? { ...item, quantity: item.quantity + 1 }
                   : item
               ),
@@ -40,18 +48,21 @@ const useBasketStore = create<BasketState>()(
           }
 
           return {
-            items: [...state.items, { product, quantity: 1 }],
+            items: [...state.items, { product, variant, quantity: 1 }],
           };
         }),
 
-      removeItem: (productId) =>
+      removeItem: (productId: string, variantSize: string) =>
         set((state) => ({
           items: state.items.reduce((acc, item) => {
-            if (item.product._id === productId) {
+            if (
+              item.product._id === productId &&
+              item.variant.size === variantSize
+            ) {
               if (item.quantity > 1) {
                 acc.push({ ...item, quantity: item.quantity - 1 });
               }
-              // skip if quantity is 1
+              // if quantity === 1, item is removed (not pushed)
             } else {
               acc.push(item);
             }
@@ -59,15 +70,27 @@ const useBasketStore = create<BasketState>()(
           }, [] as BasketItem[]),
         })),
 
-      removeAllOfItem: (productId) =>
+      // Fixed: now requires variantSize to remove the specific variant
+      removeAllOfItem: (productId: string, variantSize: string) =>
         set((state) => ({
-          items: state.items.filter((item) => item.product._id !== productId),
+          items: state.items.filter(
+            (item) =>
+              !(
+                item.product._id === productId &&
+                item.variant.size === variantSize
+              )
+          ),
         })),
 
-      updateItemQuantity: (productId, quantity) =>
+      // Fixed: accepts variantSize now
+      updateItemQuantity: (
+        productId: string,
+        variantSize: string,
+        quantity: number
+      ) =>
         set((state) => ({
           items: state.items.map((item) =>
-            item.product._id === productId
+            item.product._id === productId && item.variant.size === variantSize
               ? { ...item, quantity: Math.max(1, quantity) }
               : item
           ),
@@ -84,8 +107,12 @@ const useBasketStore = create<BasketState>()(
           0
         ),
 
-      getItemCount: (productId) => {
-        const item = get().items.find((item) => item.product._id === productId);
+      // Fixed: now accepts variantSize, counts quantity of that variant only
+      getItemCount: (productId: string, variantSize: string) => {
+        const item = get().items.find(
+          (item) =>
+            item.product._id === productId && item.variant.size === variantSize
+        );
         return item ? item.quantity : 0;
       },
 

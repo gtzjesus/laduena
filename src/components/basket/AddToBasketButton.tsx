@@ -1,85 +1,98 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import useBasketStore from '../../../store/store';
-import { Product } from '@/types';
+import { useEffect, useState } from 'react';
+import { useAuth, useUser } from '@clerk/nextjs';
 
-/**
- * Props for the AddToBasketButton component.
- */
-interface AddToBasketButtonProps {
-  /**
-   * Product object to be added to the basket.
-   */
-  product: Product;
+import Loader from '@/components/common/Loader';
+import Header from '@/components/common/header';
+import EmptyBasket from '@/components/basket/EmptyBasket';
+import OrderSummary from '@/components/basket/OrderSummary';
 
-  /**
-   * Callback to open the shopping cart or perform a side effect after item is added.
-   */
-  onAddedToBag: () => void;
+import { useReservation } from '@/app/hooks/reservation/useReservation';
+import BasketItemsList from '@/components/basket/BasketItemsList';
+import useBasketStore from 'store/store';
 
-  /**
-   * Boolean flag to disable the button if the product is out of stock.
-   */
-  disabled: boolean;
-}
+export default function BasketPage() {
+  const { isSignedIn = false } = useAuth();
+  const { user } = useUser();
 
-/**
- * AddToBasketButton handles the logic and UI for adding a product to the shopping basket.
- * It prevents duplicate additions by checking session storage.
- *
- * @component
- * @example
- * <AddToBasketButton product={product} onAddedToBag={openCart} disabled={isOutOfStock} />
- */
-const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({
-  product,
-  onAddedToBag,
-  disabled,
-}) => {
-  const { addItem } = useBasketStore();
-  const [isAdded, setIsAdded] = useState(false);
+  const groupedItems = useBasketStore((state) => state.getGroupedItems());
+  const totalPrice = useBasketStore((state) => state.getTotalPrice());
 
-  /**
-   * Check if the product was previously added by looking in session storage.
-   */
+  const [isClient, setIsClient] = useState(false);
+
+  const { isLoading, reservationError, handleReservation } = useReservation();
+
   useEffect(() => {
-    // Re-check sessionStorage for the product after any update (such as after clearing it)
-    const addedProduct = sessionStorage.getItem(product._id);
-    setIsAdded(!!addedProduct); // Set to true if it exists in sessionStorage
-  }, [product._id]); // Trigger effect when the product ID changes (or on first load)
+    setIsClient(true);
 
-  /**
-   * Handles adding the product to the basket and updating session state.
-   */
-  const handleAddToBasket = () => {
-    addItem(product);
-    setIsAdded(true);
-    sessionStorage.setItem(product._id, 'added');
-    onAddedToBag();
+    if (
+      isSignedIn &&
+      user?.id &&
+      sessionStorage.getItem('checkoutAfterLogin') === 'true'
+    ) {
+      sessionStorage.removeItem('checkoutAfterLogin');
+      handleReservation();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSignedIn, user]);
+
+  if (!isClient) return <Loader />;
+  if (groupedItems.length === 0) return <EmptyBasket />;
+
+  // ✅ FIXED: receive both productId and variantSize from child
+  const handleRemoveItem = (productId: string, variantSize: string) => {
+    useBasketStore.getState().removeAllOfItem(productId, variantSize);
+    sessionStorage.removeItem(productId); // Optional cleanup
+  };
+
+  // ✅ FIXED: receive both productId, variantSize, and new quantity
+  const handleQuantityChange = (
+    productId: string,
+    variantSize: string,
+    quantity: number
+  ) => {
+    useBasketStore
+      .getState()
+      .updateItemQuantity(productId, variantSize, quantity);
   };
 
   return (
-    <div className="flex items-center justify-center space-x-2">
-      <button
-        onClick={handleAddToBasket}
-        className={`block text-center text-xs border uppercase py-3 mt-2 transition-all w-full lg:w-[50vh] font-light ${
-          disabled || isAdded
-            ? 'bg-gray-400 text-white cursor-not-allowed'
-            : 'bg-blue-500 text-white hover:bg-opacity-90'
-        }`}
-        disabled={disabled || isAdded} // Disable the button if the product is out of stock or already added
-      >
-        <span>
-          {disabled
-            ? 'Out of Stock'
-            : isAdded
-              ? 'Added to basket'
-              : 'Add to basket'}
-        </span>
-      </button>
+    <div className="bg-red min-h-screen">
+      <Header />
+
+      <div className="w-full bg-flag-red">
+        <h1 className="uppercase text-sm font-light text-center p-5 text-white">
+          fireworks basket
+        </h1>
+      </div>
+
+      {reservationError && (
+        <div className="bg-red-100 text-red-700 text-center p-4 text-xs uppercase">
+          {reservationError}
+        </div>
+      )}
+
+      <div className="container mx-auto w-full px-2 lg:px-2 grid grid-cols-1">
+        <div className="col-span-2 pb-80">
+          {/* ✅ Pass correct handler props */}
+          <BasketItemsList
+            onQuantityChange={handleQuantityChange}
+            onRemove={handleRemoveItem}
+          />
+        </div>
+
+        <OrderSummary
+          totalItems={groupedItems.reduce(
+            (sum, item) => sum + item.quantity,
+            0
+          )}
+          totalPrice={totalPrice}
+          isSignedIn={isSignedIn}
+          isLoading={isLoading}
+          onCheckout={handleReservation}
+        />
+      </div>
     </div>
   );
-};
-
-export default AddToBasketButton;
+}

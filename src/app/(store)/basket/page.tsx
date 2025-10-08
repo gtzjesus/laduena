@@ -40,13 +40,19 @@ export default function BasketPage() {
   if (!isClient) return <Loader />;
   if (groupedItems.length === 0) return <EmptyBasket />;
 
-  const handleRemoveItem = (productId: string) => {
-    useBasketStore.getState().removeAllOfItem(productId);
+  const handleRemoveItem = (productId: string, variantSize: string) => {
+    useBasketStore.getState().removeAllOfItem(productId, variantSize);
     sessionStorage.removeItem(productId);
   };
 
-  const handleQuantityChange = (productId: string, quantity: number) => {
-    useBasketStore.getState().updateItemQuantity(productId, quantity);
+  const handleQuantityChange = (
+    productId: string,
+    variantSize: string,
+    quantity: number
+  ) => {
+    useBasketStore
+      .getState()
+      .updateItemQuantity(productId, variantSize, quantity);
   };
 
   return (

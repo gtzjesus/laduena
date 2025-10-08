@@ -2,8 +2,13 @@ import BasketItemCard from '@/components/basket/BasketItemCard';
 import useBasketStore from 'store/store';
 
 interface BasketItemsListProps {
-  onQuantityChange: (productId: string, quantity: number) => void;
-  onRemove: (productId: string) => void;
+  // Pass variantSize to the callbacks
+  onQuantityChange: (
+    productId: string,
+    variantSize: string,
+    quantity: number
+  ) => void;
+  onRemove: (productId: string, variantSize: string) => void;
 }
 
 export default function BasketItemsList({
@@ -16,7 +21,7 @@ export default function BasketItemsList({
     <>
       {groupedItems.map((item) => (
         <BasketItemCard
-          key={item.product._id}
+          key={`${item.product._id}-${item.variant.size}`}
           item={item}
           onQuantityChange={onQuantityChange}
           onRemove={onRemove}

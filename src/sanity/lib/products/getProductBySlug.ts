@@ -7,23 +7,22 @@ export const getProductBySlug = async (
   slug: string
 ): Promise<Product | null> => {
   const PRODUCT_BY_SLUG_QUERY = defineQuery(`
-    *[_type == 'product' && slug.current == $slug][0]{
-      _id,
-      itemNumber,
-      name,
-      slug,
+  *[_type == 'product' && slug.current == $slug][0]{
+    _id,
+    itemNumber,
+    name,
+    slug,
+    image,
+    extraImages,
+    description,
+    category->{_id, title},
+    variants[]{
+      size,
       price,
-      stock,
-      "imageUrl": image.asset->url,
-      "extraImageUrls": extraImages[].asset->url,
-      category->{_id, title},
-      variants[]{
-        size,
-        price,
-        stock
-      }
+      stock
     }
-  `);
+  }
+`);
 
   try {
     const result = await sanityFetch({

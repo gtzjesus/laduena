@@ -73,9 +73,9 @@ export default async function CategoryPage({
 
   return (
     <>
-      <div className="w-full bg-flag-red">
+      <div className="w-full bg-flag-blue">
         <Header />
-        <h1 className="uppercase text-sm font-light text-center p-5 text-white">
+        <h1 className="uppercase text-sm font-light text-center p-5 text-flag-red">
           {formattedTitle}
         </h1>
       </div>

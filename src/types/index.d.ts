@@ -53,12 +53,19 @@ export interface Product extends SanityDocument {
   categories?: Category[];
   category?: Category; // you use singular `category` in your schema
 }
+// Variants
+export type Variant = {
+  size: string;
+  price: number;
+  stock: number;
+};
 
 // 🧠 Basket Item
-export interface BasketItem {
+export type BasketItem = {
   product: Product;
   quantity: number;
-}
+  variant: Variant; // ⬅️ NEW!
+};
 
 // 🔎 Search Suggestions
 export interface SearchSuggestionsResponse {

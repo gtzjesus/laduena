@@ -8,8 +8,13 @@ import { BasketItem } from '@/types';
 
 interface BasketItemCardProps {
   item: BasketItem;
-  onQuantityChange: (productId: string, quantity: number) => void;
-  onRemove: (productId: string) => void;
+  // Add variantSize argument to callbacks
+  onQuantityChange: (
+    productId: string,
+    variantSize: string,
+    quantity: number
+  ) => void;
+  onRemove: (productId: string, variantSize: string) => void;
 }
 
 const BasketItemCard: React.FC<BasketItemCardProps> = ({
@@ -19,6 +24,7 @@ const BasketItemCard: React.FC<BasketItemCardProps> = ({
 }) => {
   const router = useRouter();
   const { _id, name, price, slug, image } = item.product;
+  const variantSize = item.variant.size;
 
   const [liveStock, setLiveStock] = useState<number | null>(
     item.product.stock ?? null
@@ -70,7 +76,7 @@ const BasketItemCard: React.FC<BasketItemCardProps> = ({
 
       <div className="flex items-center justify-center text-center p-1 gap-2">
         <h2 className="uppercase text-md font-semibold text-gray-800">
-          {name}
+          {name} ({variantSize})
         </h2>
         <p className="font-light">|</p>
         <p className="text-sm font-light text-gray-800">
@@ -85,7 +91,9 @@ const BasketItemCard: React.FC<BasketItemCardProps> = ({
 
         <select
           value={item.quantity}
-          onChange={(e) => onQuantityChange(_id, +e.target.value)}
+          onChange={(e) =>
+            onQuantityChange(_id, variantSize, Number(e.target.value))
+          }
           className="border text-xs w-full max-w-[60px] bg-white text-center text-gray-800"
           disabled={!liveStock || liveStock === 0}
         >
@@ -102,7 +110,7 @@ const BasketItemCard: React.FC<BasketItemCardProps> = ({
 
       <div className="flex justify-center">
         <button
-          onClick={() => onRemove(_id)}
+          onClick={() => onRemove(_id, variantSize)}
           className="text-xs underline font-light text-gray-800 hover:text-red-600 transition"
         >
           remove
