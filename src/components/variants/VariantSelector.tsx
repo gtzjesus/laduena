@@ -50,8 +50,7 @@ export default function VariantSelector({ variants }: VariantSelectorProps) {
 
   return (
     <section className="bg-flag-red bg-opacity-10 rounded-lg p-4">
-      <h2 className="text-lg font-semibold mb-3">Available Sizes & Prices</h2>
-      <ul className="flex flex-wrap gap-3 mb-4">
+      <ul className="flex flex-col gap-3 mb-4">
         {variants.map((variant, idx) => {
           const isAvailable = (variant.stock ?? 0) > 0;
           const isSelected = selectedVariant?.size === variant.size;
@@ -59,12 +58,12 @@ export default function VariantSelector({ variants }: VariantSelectorProps) {
           return (
             <li
               key={idx}
-              className={`cursor-pointer rounded-md border px-4 py-2 transition
+              className={`cursor-pointer rounded-lg border px-4 py-6 transition
                 ${
                   isSelected
-                    ? 'border-flag-blue bg-flag-blue text-white'
+                    ? 'border-flag-blue  bg-white '
                     : isAvailable
-                      ? 'border-flag-blue bg-white hover:bg-flag-blue hover:text-white'
+                      ? 'border-gray-300 bg-white '
                       : 'border-gray-300 bg-gray-100 text-gray-400 cursor-not-allowed'
                 }
               `}
@@ -78,8 +77,13 @@ export default function VariantSelector({ variants }: VariantSelectorProps) {
               role="button"
               tabIndex={isAvailable ? 0 : -1}
             >
-              <span className="font-medium">{variant.size}</span>{' '}
-              <span>${variant.price.toFixed(2)}</span>
+              <div className="flex justify-between items-center w-full">
+                <span className="font-bold text-sm">{variant.size}</span>
+                <span className="font-light text-xs">
+                  ${variant.price.toFixed(2)}
+                </span>
+              </div>
+
               {!isAvailable && (
                 <span className="block text-xs italic">(Out of stock)</span>
               )}

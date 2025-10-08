@@ -68,7 +68,7 @@ async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const isOutOfStock = product.stock != null && product.stock <= 0;
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen">
       <Header />
 
       <div className="w-full bg-flag-blue">
