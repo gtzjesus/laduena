@@ -1,5 +1,5 @@
 import { Product } from '@/types';
-import ProductClient from './ProductClient';
+import ProductClient from '../../app/(store)/product/[slug]/ProductClient';
 
 /**
  * Props for the ProductSummary component.

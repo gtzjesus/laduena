@@ -4,7 +4,7 @@ import { getProductBySlug } from '@/sanity/lib/products/getProductBySlug';
 import { notFound } from 'next/navigation';
 import { imageUrl } from '@/lib/imageUrl';
 import type { Metadata } from 'next';
-import ProductClient from '@/components/products/ProductClient';
+import ProductClient from '@/app/(store)/product/[slug]/ProductClient';
 
 export const dynamic = 'force-static';
 export const revalidate = 60;
@@ -77,7 +77,7 @@ async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
         </h1>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 text-flag-blue max-w-7xl mx-auto px-4 py-8">
+      <div className="grid grid-cols-1  text-flag-blue  mx-auto px-4 py-8 max-w-lg">
         <div className="relative flex flex-col space-y-6">
           <ProductImages product={product} isOutOfStock={isOutOfStock} />
 
