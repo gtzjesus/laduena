@@ -45,10 +45,12 @@ const config: Config = {
       // Custom colors including CSS variable-based themes and static colors
       colors: {
         // Static custom colors
-        'custom-gray': '#D5D5D5',
+        'custom-gray': '#EDEDED',
         pearl: '#F5F5F5',
         'flag-red': '#FFF7F8',
         'flag-blue': '#34495E',
+        'flag-light-blue': '#0071E3',
+
         'custom-background': '#FFFBFC',
 
         green: '#2E8B57',

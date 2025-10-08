@@ -79,7 +79,7 @@ async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 text-flag-blue max-w-7xl mx-auto px-4 py-8">
         {/* Left: Images + Info */}
-        <div className="relative flex flex-col overflow-y-auto pb-40 space-y-6">
+        <div className="relative flex flex-col overflow-y-auto space-y-6">
           <ProductImages product={product} isOutOfStock={isOutOfStock} />
 
           {/* Render interactive VariantSelector only if variants exist */}
@@ -96,29 +96,6 @@ async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
               </span>
             </div>
           )}
-        </div>
-
-        {/* Right: Summary or additional details could go here */}
-        <div className="p-4">
-          {/* Summary box */}
-          <div className="sticky top-20  rounded-lg p-6 shadow-md">
-            <h2 className="text-xl font-bold mb-4">Product Summary</h2>
-            <p className="mb-2">
-              Price Range:{' '}
-              {product.variants?.length
-                ? `$${Math.min(...product.variants.map((v) => v.price ?? 0)).toFixed(2)} - $${Math.max(
-                    ...product.variants.map((v) => v.price ?? 0)
-                  ).toFixed(2)}`
-                : product.price
-                  ? `$${product.price.toFixed(2)}`
-                  : 'N/A'}
-            </p>
-            {isOutOfStock && (
-              <p className="text-red-600 font-semibold">
-                Currently out of stock
-              </p>
-            )}
-          </div>
         </div>
       </div>
     </div>

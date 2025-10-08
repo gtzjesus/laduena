@@ -61,7 +61,7 @@ export default function VariantSelector({ variants }: VariantSelectorProps) {
               className={`cursor-pointer rounded-lg border px-4 py-6 transition
                 ${
                   isSelected
-                    ? 'border-flag-blue  bg-white '
+                    ? 'border-flag-light-blue border-2  bg-white '
                     : isAvailable
                       ? 'border-gray-300 bg-white '
                       : 'border-gray-300 bg-gray-100 text-gray-400 cursor-not-allowed'
@@ -84,9 +84,7 @@ export default function VariantSelector({ variants }: VariantSelectorProps) {
                 </span>
               </div>
 
-              {!isAvailable && (
-                <span className="block text-xs italic">(Out of stock)</span>
-              )}
+              {!isAvailable && <span className="block text-xs italic"></span>}
             </li>
           );
         })}
@@ -98,11 +96,11 @@ export default function VariantSelector({ variants }: VariantSelectorProps) {
         onClick={handleAddToBasket}
         className={`w-full py-2 rounded-md text-white ${
           selectedVariant
-            ? 'bg-flag-blue hover:bg-flag-blue-dark'
+            ? 'bg-flag-light-blue hover:bg-flag-blue-dark'
             : 'bg-gray-400 cursor-not-allowed'
         } transition`}
       >
-        Add {selectedVariant ? selectedVariant.size : ''} to Basket
+        Add to Bag
       </button>
     </section>
   );
