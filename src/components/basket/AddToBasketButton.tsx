@@ -1,11 +1,11 @@
 'use client';
 
-import { Product, Variant } from '@/types'; // Import Variant type too
+import { Product, Variant } from '@/types';
 import useBasketStore from 'store/store';
 
 type AddToBasketButtonProps = {
   product: Product;
-  variant: Variant; // Use full Variant type here
+  variant: Variant;
   onAddedToBag: () => void;
   disabled?: boolean;
 };
@@ -22,23 +22,24 @@ export default function AddToBasketButton({
     if (disabled) return;
 
     addItemToBasket(product, variant);
-
     onAddedToBag();
     console.log('Adding to basket:', { product, variant });
   };
 
   return (
-    <button
-      type="button"
-      onClick={handleClick}
-      disabled={disabled}
-      className={`w-full py-2 rounded-md text-white transition ${
-        disabled
-          ? 'bg-gray-400 cursor-not-allowed'
-          : 'bg-flag-light-blue hover:bg-flag-blue-dark'
-      }`}
-    >
-      Add to Bag
-    </button>
+    <div className="fixed bottom-0 left-0 w-full z-50 bg-transparent px-4 py-3  ">
+      <button
+        type="button"
+        onClick={handleClick}
+        disabled={disabled}
+        className={`w-full py-3 rounded-md text-white font-semibold transition ${
+          disabled
+            ? 'bg-gray-400 cursor-not-allowed'
+            : 'bg-flag-light-blue hover:bg-flag-blue-dark'
+        }`}
+      >
+        Add to Bag
+      </button>
+    </div>
   );
 }

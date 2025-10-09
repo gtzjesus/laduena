@@ -77,7 +77,7 @@ async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
         </h1>
       </div>
 
-      <div className="grid grid-cols-1  text-flag-blue  mx-auto px-4 py-8 max-w-lg">
+      <div className="grid grid-cols-1 text-flag-blue  mx-auto px-4 py-8 max-w-lg">
         <div className="relative flex flex-col space-y-6">
           <ProductImages product={product} isOutOfStock={isOutOfStock} />
 

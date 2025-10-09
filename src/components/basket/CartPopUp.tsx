@@ -71,9 +71,9 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
         {/* Scrollable Content */}
         <div className="flex-1 overflow-y-auto py-2">
           {hasItems &&
-            cartItems.map((item) => (
+            cartItems.map((item, index) => (
               <div
-                key={item.product._id}
+                key={`${item.product._id}-${index}`}
                 className="flex items-center gap-4 py-4 border-b border-gray-200"
               >
                 {/* Product Image */}

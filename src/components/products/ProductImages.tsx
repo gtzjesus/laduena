@@ -55,7 +55,7 @@ const ProductImages = ({ product, isOutOfStock }: ProductImagesProps) => {
       {/* Fix: Set max-h and prevent vertical overflow */}
       <div
         ref={scrollRef}
-        className={`flex overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory hide-scrollbar gap-3 ${
+        className={`flex overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory hide-scrollbar gap-3  ${
           isOutOfStock ? 'opacity-50' : ''
         }`}
         style={{ maxHeight: '100vh' }} // Prevent vertical scroll
@@ -63,7 +63,7 @@ const ProductImages = ({ product, isOutOfStock }: ProductImagesProps) => {
         {images.map((image, index) => (
           <motion.div
             key={index}
-            className="flex-shrink-0 w-full max-w-full snap-center relative aspect-square overflow-hidden bg-custom-gray rounded-xl"
+            className="flex-shrink-0 w-full max-w-full snap-center relative aspect-square overflow-hidden bg-custom-gray "
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: index * 0.05 }}
