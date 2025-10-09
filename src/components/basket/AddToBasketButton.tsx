@@ -27,7 +27,7 @@ export default function AddToBasketButton({
   };
 
   return (
-    <div className="fixed bottom-0 left-0 w-full z-50 bg-transparent px-4 py-3  ">
+    <div className="fixed bottom-0 left-0  w-full z-50 bg-transparent px-4 py-3  ">
       <button
         type="button"
         onClick={handleClick}

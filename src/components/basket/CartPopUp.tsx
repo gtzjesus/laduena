@@ -48,7 +48,7 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
               {hasItems ? 'Added to bag' : 'Bag is empty'}
             </p>
             <button
-              className="text-xl hover:text-gray-300 transition"
+              className="text-3xl text-white transition"
               onClick={onClose}
               aria-label="Close cart popup"
             >
@@ -62,10 +62,10 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
               cartItems.map((item, index) => (
                 <div
                   key={`${item.product._id}-${index}`}
-                  className="flex items-center gap-4 py-4 border-b border-gray-200"
+                  className="flex items-center gap-1 py-3 border-b border-flag-light-red"
                 >
                   {/* Product Image */}
-                  <div className="w-24 flex-shrink-0">
+                  <div className="w-10 flex-shrink-0">
                     <Link href={`/product/${item.product.slug?.current || ''}`}>
                       <Image
                         src={
@@ -84,6 +84,7 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
 
                   {/* Product Info */}
                   <div className="flex flex-1 items-center">
+                    <p className="uppercase text-xs font-semibold text-white"></p>
                     <p className="uppercase text-xs font-semibold text-white">
                       {item.product.name}
                     </p>

@@ -43,7 +43,7 @@ export default function VariantSelector({
   };
 
   return (
-    <section className="bg-flag-red bg-opacity-10 rounded-lg p-4">
+    <section className="bg-flag-red bg-opacity-10 rounded-lg p-4 mb-10">
       <ul className="flex flex-col gap-3 mb-4">
         {variants.map((variant, idx) => {
           const isAvailable = variant.stock > 0;
@@ -63,7 +63,14 @@ export default function VariantSelector({
               `}
               title={
                 isAvailable
-                  ? `Size: ${variant.size} - $${variant.price.toFixed(2)}`
+                  ? `Size: ${variant.size} - $${
+                      typeof variant.price === 'number'
+                        ? variant.price.toFixed(2)
+                        : typeof variant.price === 'string' &&
+                            !isNaN(Number(variant.price))
+                          ? Number(variant.price).toFixed(2)
+                          : 'N/A'
+                    }`
                   : 'Out of stock'
               }
               onClick={() => handleSelect(variant)}
@@ -74,7 +81,12 @@ export default function VariantSelector({
               <div className="flex justify-between items-center w-full">
                 <span className="font-bold text-sm">{variant.size}</span>
                 <span className="font-light text-xs">
-                  ${variant.price.toFixed(2)}
+                  {typeof variant.price === 'number'
+                    ? `$${variant.price.toFixed(2)}`
+                    : typeof variant.price === 'string' &&
+                        !isNaN(Number(variant.price))
+                      ? `$${Number(variant.price).toFixed(2)}`
+                      : 'N/A'}
                 </span>
               </div>
             </li>

@@ -29,6 +29,7 @@ ProductThumb.propTypes = {
  *
  * @returns {JSX.Element | null} The rendered component or null if product data is invalid.
  */
+
 function ProductThumb({ product }: { product: Product }) {
   // Validate required fields and ensure the product is a valid object
   if (!product || typeof product !== 'object') {
@@ -103,7 +104,11 @@ function ProductThumb({ product }: { product: Product }) {
         </h2>
 
         <p className="uppercase text-xs font-light text-center text-gray-800">
-          {productPrice != null ? `$${productPrice.toFixed(2)}` : 'N/A'}
+          {typeof productPrice === 'number'
+            ? `$${productPrice.toFixed(2)}`
+            : typeof productPrice === 'string' && !isNaN(Number(productPrice))
+              ? `$${Number(productPrice).toFixed(2)}`
+              : 'N/A'}
         </p>
       </div>
     </Link>
