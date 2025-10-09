@@ -83,28 +83,33 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
                   </div>
 
                   {/* Product Info */}
-                  <div className="flex flex-1 items-center">
+                  <div className="flex justify-center items-center">
                     <p className="uppercase text-xs font-semibold text-white"></p>
                     <p className="uppercase text-xs font-semibold text-white">
                       {item.product.name}
                     </p>
                     <p className="text-xs font-light text-white ml-2 whitespace-nowrap">
-                      ${((item.product.price || 0) * item.quantity).toFixed(0)}
+                      {item.variant?.size}
+                    </p>
+                    <p className="text-xs font-light text-white ml-2 whitespace-nowrap">
+                      x{item.quantity}
+                    </p>
+                    <p className="text-xs font-bold text-white ml-2 whitespace-nowrap">
+                      ${((item.variant?.price || 0) * item.quantity).toFixed(2)}
                     </p>
                   </div>
                 </div>
               ))}
-          </div>
-
-          {/* Footer */}
-          <div className="gap-2 flex justify-center lg:mb-[20%]">
-            <Link
-              href={hasItems ? '/basket' : '/search?q=*'}
-              className=" bg-opacity-90 border border-flag-light-blue bg-flag-light-blue text-flag-red px-5 py-4 text-center  rounded-3xl text-xs font-bold transition duration-200 ease-in-out shadow-lg w-full max-w-[180px] hover:bg-opacity-100  drop-shadow-[0_4px_6px_rgba(0,0,0,0.9)]"
-              onClick={onClose}
-            >
-              {hasItems ? 'Review Bag' : 'Start Adding Products to Bag'}
-            </Link>
+            {/* Footer */}
+            <div className="gap-2 mt-5 flex justify-center ">
+              <Link
+                href={hasItems ? '/basket' : '/search?q=*'}
+                className=" bg-opacity-90 border border-flag-light-blue bg-flag-light-blue text-flag-red px-5 py-4 text-center  rounded-3xl text-xs font-bold transition duration-200 ease-in-out shadow-lg w-full max-w-[180px] hover:bg-opacity-100  drop-shadow-[0_4px_6px_rgba(0,0,0,0.9)]"
+                onClick={onClose}
+              >
+                {hasItems ? 'Review Bag' : 'Start Adding Products to Bag'}
+              </Link>
+            </div>
           </div>
         </div>
       </div>

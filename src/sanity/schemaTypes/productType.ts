@@ -16,7 +16,7 @@ export const productType = defineType({
     }),
     defineField({
       name: 'name',
-      title: 'Product Name',
+      title: 'Name',
       type: 'string',
       validation: (Rule) => Rule.required(),
     }),
@@ -29,86 +29,65 @@ export const productType = defineType({
     }),
     defineField({
       name: 'image',
-      title: 'Main Product Image',
+      title: 'Main Image',
       type: 'image',
       options: { hotspot: true },
+      description: 'Thumbnail or main display image.',
+    }),
+    defineField({
+      name: 'extraImages',
+      title: 'Additional Images',
+      type: 'array',
+      of: [{ type: 'image', options: { hotspot: true } }],
+      validation: (Rule) =>
+        Rule.max(4).error('You can upload up to 4 additional images.'),
     }),
     defineField({
       name: 'description',
-      title: 'Product Description',
+      title: 'Description',
       type: 'text',
     }),
 
-    // 🍧 FLAVORS ARRAY
+    // Variants Array without flavor
     defineField({
-      name: 'flavors',
-      title: 'Flavors',
+      name: 'variants',
+      title: 'Variants',
       type: 'array',
       of: [
         defineField({
           type: 'object',
-          name: 'flavor',
-          title: 'Flavor',
+          name: 'variant',
+          title: 'Variant',
           fields: [
-            defineField({
-              name: 'name',
-              title: 'Flavor Name',
+            {
+              name: 'size',
+              title: 'Size',
               type: 'string',
+              options: {
+                list: ['Small', 'Medium', 'Large', 'Extra Large'],
+                layout: 'dropdown',
+              },
               validation: (Rule) => Rule.required(),
-            }),
-            defineField({
-              name: 'image',
-              title: 'Flavor Image',
-              type: 'image',
-              options: { hotspot: true },
-            }),
-
-            // 🍧 Variants inside flavor
-            defineField({
-              name: 'variants',
-              title: 'Variants',
-              type: 'array',
-              of: [
-                defineField({
-                  type: 'object',
-                  name: 'variant',
-                  title: 'Variant',
-                  fields: [
-                    defineField({
-                      name: 'size',
-                      title: 'Size',
-                      type: 'string',
-                      options: {
-                        list: ['Small', 'Medium', 'Large', 'Extra Large'],
-                        layout: 'dropdown',
-                      },
-                      validation: (Rule) => Rule.required(),
-                    }),
-                    defineField({
-                      name: 'price',
-                      title: 'Price',
-                      type: 'number',
-                      validation: (Rule) => Rule.required().min(0),
-                    }),
-                    defineField({
-                      name: 'stock',
-                      title: 'Stock',
-                      type: 'number',
-                      validation: (Rule) => Rule.required().min(0),
-                    }),
-                  ],
-                }),
-              ],
-              validation: (Rule) =>
-                Rule.min(1).error(
-                  'Each flavor must have at least one variant.'
-                ),
-            }),
+            },
+            {
+              name: 'price',
+              title: 'Price',
+              type: 'number',
+              validation: (Rule) => Rule.required().min(0),
+            },
+            {
+              name: 'stock',
+              title: 'Stock',
+              type: 'number',
+              validation: (Rule) => Rule.required().min(0),
+            },
           ],
         }),
       ],
+      description:
+        'Each variant corresponds to a unique size with its own price and stock.',
       validation: (Rule) =>
-        Rule.min(1).error('You must add at least one flavor.'),
+        Rule.min(1).error('You must add at least one variant'),
     }),
 
     defineField({
@@ -128,7 +107,7 @@ export const productType = defineType({
     prepare({ title, media, itemNumber }) {
       return {
         title: `${title} (${itemNumber})`,
-        subtitle: 'Product with Flavors and Variants',
+        subtitle: 'Product with Variants',
         media,
       };
     },
