@@ -62,7 +62,7 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
               cartItems.map((item, index) => (
                 <div
                   key={`${item.product._id}-${index}`}
-                  className="flex items-center gap-1 py-3 border-b border-flag-light-red"
+                  className="flex items-center gap-1 py-3 border-b border-flag-red"
                 >
                   {/* Product Image */}
                   <div className="w-10 flex-shrink-0">
@@ -83,18 +83,24 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
                   </div>
 
                   {/* Product Info */}
-                  <div className="flex justify-center items-center">
-                    <p className="uppercase text-xs font-semibold text-white"></p>
+                  <div className="flex ">
+                    <p className="uppercase text-sm font-semibold text-white"></p>
                     <p className="uppercase text-xs font-semibold text-white">
+                      {item.product.category?.title ? (
+                        <span className=" mr-2">
+                          {item.product.category.title}
+                        </span>
+                      ) : null}
                       {item.product.name}
                     </p>
-                    <p className="text-xs font-light text-white ml-2 whitespace-nowrap">
+
+                    <p className="uppercase text-xs font-semibold text-white ml-2">
                       {item.variant?.size}
                     </p>
-                    <p className="text-xs font-light text-white ml-2 whitespace-nowrap">
+                    <p className="uppercase text-xs font-semibold text-white ml-2">
                       x{item.quantity}
                     </p>
-                    <p className="text-xs font-bold text-white ml-2 whitespace-nowrap">
+                    <p className="uppercase text-xs font-bold text-white ml-2">
                       ${((item.variant?.price || 0) * item.quantity).toFixed(2)}
                     </p>
                   </div>
