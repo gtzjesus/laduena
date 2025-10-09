@@ -51,7 +51,7 @@ const ProductImages = ({ product, isOutOfStock }: ProductImagesProps) => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full p-10">
       {/* Fix: Set max-h and prevent vertical overflow */}
       <div
         ref={scrollRef}
