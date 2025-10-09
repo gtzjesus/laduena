@@ -59,7 +59,7 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
         ref={popupRef}
         style={{ backgroundImage: "url('/images/basket.webp')" }}
         className={clsx(
-          'transform transition-all duration-300 ease-in-out bg-cover bg-center bg-no-repeat p-4 w-full h-[100vh] max-w-[100vw] lg:max-w-[625px] flex flex-col absolute bottom-0 left-0 right-0',
+          'transform transition-all duration-300 ease-in-out bg-cover bg-center bg-no-repeat p-4 w-full h-[90vh] lg:h-[90vh] max-w-[100vw] lg:max-w-[625px] flex flex-col absolute bottom-0 left-0 right-0',
           {
             'translate-y-0 opacity-100': isVisible,
             'translate-y-full opacity-0': !isVisible,
