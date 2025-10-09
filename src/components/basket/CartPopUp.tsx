@@ -31,7 +31,6 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
 
   return (
     <div className="fixed top-0 left-0 w-full h-full z-[9999] bg-black bg-opacity-50">
-      {/* Basket popup panel */}
       <div
         ref={popupRef}
         style={{ backgroundImage: "url('/images/basket.webp')" }}
@@ -62,53 +61,56 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
               cartItems.map((item, index) => (
                 <div
                   key={`${item.product._id}-${index}`}
-                  className="flex gap-3 py-2 border-b border-flag-red"
+                  className="flex justify-between gap-3 py-2 border-b border-flag-red items-center"
                 >
-                  {/* Product Image */}
-                  <div className="w-16 h-16 relative flex-shrink-0">
-                    <Link href={`/product/${item.product.slug?.current || ''}`}>
-                      <Image
-                        src={
-                          item.product.image
-                            ? urlFor(item.product.image).url()
-                            : '/fallback-image.jpg'
-                        }
-                        alt={item.product.name || 'Product'}
-                        layout="fill"
-                        objectFit="cover"
-                        className="rounded"
-                        priority
-                      />
-                    </Link>
-                  </div>
+                  {/* Left: Image + Name + Category */}
+                  <div className="flex gap-3 items-center w-2/3">
+                    {/* Image */}
+                    <div className="w-16 h-16 relative flex-shrink-0">
+                      <Link
+                        href={`/product/${item.product.slug?.current || ''}`}
+                      >
+                        <Image
+                          src={
+                            item.product.image
+                              ? urlFor(item.product.image).url()
+                              : '/fallback-image.jpg'
+                          }
+                          alt={item.product.name || 'Product'}
+                          layout="fill"
+                          objectFit="cover"
+                          className="rounded"
+                          priority
+                        />
+                      </Link>
+                    </div>
 
-                  {/* Product Info */}
-                  <div className="flex flex-col justify-between text-white text-xs w-full ">
-                    <div>
-                      <p className="font-semibold uppercase text-xs">
+                    {/* Name + Category */}
+                    <div className="flex flex-col text-white text-xs">
+                      <p className="font-semibold uppercase">
                         {item.product.name}
                       </p>
                       {item.product.category?.title && (
-                        <p className="font-light uppercase text-xs">
+                        <p className="text-gray-300 uppercase text-[10px]">
                           {item.product.category.title}
                         </p>
                       )}
-                      <div className=" flex gap-1">
-                        <p className="ml-auto font-semibold uppercase text-xs">
-                          {item.variant?.size}
-                        </p>
-                        <p className="text-white">x{item.quantity}</p>
-                      </div>
                     </div>
+                  </div>
 
-                    <div className="flex items-center gap-3 mt-1 text-[11px]">
-                      <p className="font-bold ml-auto">
-                        $
-                        {((item.variant?.price || 0) * item.quantity).toFixed(
-                          2
-                        )}
-                      </p>
-                    </div>
+                  {/* Right: Size + Qty + Price */}
+                  <div className="flex flex-col items-end text-white text-xs w-1/3">
+                    {item.variant?.size && (
+                      <span className="bg-white text-black px-2 py-[1px] rounded-full uppercase text-[10px] font-medium mb-1">
+                        {item.variant.size}
+                      </span>
+                    )}
+                    <span className="text-white text-xs mb-1">
+                      x{item.quantity}
+                    </span>
+                    <span className="font-bold text-sm">
+                      ${((item.variant?.price || 0) * item.quantity).toFixed(2)}
+                    </span>
                   </div>
                 </div>
               ))}
