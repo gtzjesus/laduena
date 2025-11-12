@@ -8,7 +8,6 @@ import { BasketItem } from '@/types';
 
 interface BasketItemCardProps {
   item: BasketItem;
-  // Add variantSize argument to callbacks
   onQuantityChange: (
     productId: string,
     variantSize: string,
@@ -23,19 +22,18 @@ const BasketItemCard: React.FC<BasketItemCardProps> = ({
   onRemove,
 }) => {
   const router = useRouter();
-  const { _id, name, price, slug, image } = item.product;
-  const variantSize = item.variant.size;
+  const { _id, name, slug, image } = item.product;
+  const { price, size: variantSize, stock } = item.variant;
 
-  const [liveStock, setLiveStock] = useState<number | null>(
-    item.product.stock ?? null
-  );
+  const [liveStock, setLiveStock] = useState<number | null>(stock ?? null);
 
   useEffect(() => {
     const fetchStock = async () => {
       try {
         const res = await fetch(`/api/stock?ids=${_id}`);
         const data = await res.json();
-        setLiveStock(data[_id]);
+        const variantStock = data[_id]?.[variantSize] ?? 0;
+        setLiveStock(variantStock);
       } catch (err) {
         console.error(`❌ Failed to fetch live stock for ${_id}:`, err);
       }
@@ -43,7 +41,6 @@ const BasketItemCard: React.FC<BasketItemCardProps> = ({
 
     fetchStock();
     const interval = setInterval(fetchStock, 5000);
-
     return () => clearInterval(interval);
   }, [_id]);
 
@@ -80,7 +77,7 @@ const BasketItemCard: React.FC<BasketItemCardProps> = ({
         </h2>
         <p className="font-light">|</p>
         <p className="text-sm font-light text-gray-800">
-          ${(price! * item.quantity).toFixed(0)}
+          ${(price * item.quantity).toFixed(2)}
         </p>
       </div>
 
@@ -97,9 +94,6 @@ const BasketItemCard: React.FC<BasketItemCardProps> = ({
           className="border text-xs w-full max-w-[60px] bg-white text-center text-gray-800"
           disabled={!liveStock || liveStock === 0}
         >
-          <option value="" disabled>
-            QTY
-          </option>
           {Array.from({ length: liveStock ?? 0 }, (_, i) => i + 1).map((q) => (
             <option key={q} value={q}>
               {q}

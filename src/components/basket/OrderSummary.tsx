@@ -1,89 +1,101 @@
 'use client';
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { SignInButton } from '@clerk/nextjs';
+import useBasketStore from 'store/store';
 
 interface OrderSummaryProps {
-  /**
-   * Total number of items in the basket.
-   */
-  totalItems: number;
-
-  /**
-   * Total price of all items.
-   */
-  totalPrice: number;
-
-  /**
-   * Whether the user is signed in.
-   */
   isSignedIn: boolean;
-
-  /**
-   * Loading state for checkout action.
-   */
   isLoading: boolean;
-
-  /**
-   * Callback to trigger checkout flow.
-   */
   onCheckout: () => void;
 }
 
-/**
- * OrderSummary displays a cart summary with item count,
- * subtotal, and a checkout button.
- *
- * Tax is calculated at checkout via Stripe.
- */
 const OrderSummary: React.FC<OrderSummaryProps> = ({
-  totalItems,
-  totalPrice,
   isSignedIn,
   isLoading,
   onCheckout,
 }) => {
+  const items = useBasketStore((state) => state.items);
+
+  const { totalItems, totalPrice } = useMemo(() => {
+    const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
+    const totalPrice = items.reduce(
+      (sum, item) => sum + item.variant.price * item.quantity,
+      0
+    );
+    return { totalItems, totalPrice };
+  }, [items]);
+
   return (
-    <div className="w-full lg:w-auto lg:sticky h-fit bg-flag-blue p-6 lg:p-12 fixed bottom-0 left-0 lg:left-auto lg:bottom-0 lg:order-last shadow-md">
-      <h3 className="uppercase text-xs font-light text-center text-white border-b pb-1">
-        Reservation Summary
+    <div
+      className="
+        fixed bottom-0 left-0 w-full 
+        md:left-1/2 md:-translate-x-1/2
+        md:w-[600px] 
+        bg-flag-blue md:bg-gradient-to-b md:shadow-2xl
+        text-white p-5 lg:p-8 z-40
+        rounded-t-2xl
+        transition-all duration-300
+      "
+    >
+      {/* Header */}
+      <h3 className="uppercase text-sm font-light text-center tracking-wide border-b border-white/20 pb-2">
+        Bag Summary
       </h3>
 
-      <div className="pt-1 space-y-1">
-        <p className="flex justify-between uppercase text-xs font-light text-white">
-          <span>Total fireworks:</span>
-          <span>{totalItems}</span>
-        </p>
-        <p className="flex justify-between uppercase text-xs font-light text-white">
-          <span>
+      {/* Summary */}
+      <div className="pt-3 space-y-2 text-xs lg:text-sm">
+        <div className="flex justify-between font-light">
+          <span className="opacity-90">Total fireworks</span>
+          <span className="font-medium">{totalItems}</span>
+        </div>
+
+        <div className="flex justify-between font-light">
+          <span className="opacity-90">
             Subtotal{' '}
-            <span className="lowercase">(estimated — pay at store)</span>:
+            <span className="lowercase opacity-70">
+              (estimated — pay at store)
+            </span>
           </span>
-          <span>${totalPrice.toFixed(0)}</span>
-        </p>
+          <span className="font-semibold">${totalPrice.toFixed(2)}</span>
+        </div>
       </div>
 
-      {/* Action button */}
+      {/* Divider */}
+      <div className="border-t border-white/20 my-3" />
+
+      {/* Checkout / Sign-in */}
       {isSignedIn ? (
         <button
           onClick={onCheckout}
-          disabled={isLoading}
-          className="mt-3 w-full text-sm uppercase font-light bg-blue-500 text-white py-3 rounded hover:bg-blue-600 disabled:bg-green-600 transition"
-          aria-disabled={isLoading}
+          disabled={isLoading || totalItems === 0}
+          className={`
+            mt-2 w-full py-3 text-sm uppercase rounded-md font-medium
+            transition-all duration-300
+            ${
+              isLoading || totalItems === 0
+                ? 'bg-gray-400 cursor-not-allowed'
+                : 'bg-flag-light-blue hover:bg-flag-blue hover:shadow-[0_0_12px_rgba(56,189,248,0.6)]'
+            }
+          `}
         >
           {isLoading ? 'Reserving Fireworks...' : 'Reserve Fireworks'}
         </button>
       ) : (
-        <div className="flex items-center justify-center mt-3">
+        <div className="flex justify-center mt-2">
           <SignInButton mode="modal">
             <button
-              className="w-full text-sm bg-blue-500 border uppercase py-3 text-white font-light hover:bg-opacity-90 transition"
-              onClick={() => {
-                // Set a flag to run checkout after login
-                sessionStorage.setItem('checkoutAfterLogin', 'true');
-              }}
+              className="
+                w-full py-3 text-sm uppercase rounded-md font-medium
+                bg-flag-light-blue hover:bg-flag-blue
+                hover:shadow-[0_0_12px_rgba(56,189,248,0.6)]
+                transition-all duration-300
+              "
+              onClick={() =>
+                sessionStorage.setItem('checkoutAfterLogin', 'true')
+              }
             >
-              Reserve Fireworks
+              Check Out
             </button>
           </SignInButton>
         </div>

@@ -67,7 +67,7 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
         )}
       >
         {/* Overlay */}
-        <div className="absolute inset-0 bg-black bg-opacity-60 z-0 rounded-md" />
+        <div className="absolute inset-0 bg-black bg-opacity-60 z-0 " />
 
         {/* Content */}
         <div className="relative z-10 flex flex-col h-full">

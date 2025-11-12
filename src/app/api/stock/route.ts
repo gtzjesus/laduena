@@ -13,12 +13,24 @@ export async function GET(req: Request) {
 
   try {
     const products = await backendClient.fetch<
-      { _id: string; stock: number }[]
-    >(`*[_type == "product" && _id in $ids]{ _id, stock }`, { ids });
+      { _id: string; variants: { size: string; stock: number }[] }[]
+    >(
+      `*[_type == "product" && _id in $ids]{
+        _id,
+        variants[]{ size, stock }
+      }`,
+      { ids }
+    );
 
-    const stockMap: Record<string, number> = {};
+    // Build an object like { [productId]: { [size]: stock } }
+    const stockMap: Record<string, Record<string, number>> = {};
+
     for (const p of products) {
-      stockMap[p._id] = p.stock ?? 0;
+      const variantStocks: Record<string, number> = {};
+      for (const v of p.variants || []) {
+        variantStocks[v.size] = v.stock ?? 0;
+      }
+      stockMap[p._id] = variantStocks;
     }
 
     return NextResponse.json(stockMap);

@@ -17,7 +17,6 @@ export default function BasketPage() {
   const { user } = useUser();
 
   const groupedItems = useBasketStore((state) => state.getGroupedItems());
-  const totalPrice = useBasketStore((state) => state.getTotalPrice());
 
   const [isClient, setIsClient] = useState(false);
 
@@ -60,9 +59,9 @@ export default function BasketPage() {
     <div className="bg-red min-h-screen">
       <Header />
 
-      <div className="w-full bg-flag-red">
+      <div className="w-full bg-flag-blue">
         <h1 className="uppercase text-sm font-light text-center p-5 text-white">
-          fireworks basket
+          bag
         </h1>
       </div>
 
@@ -73,19 +72,13 @@ export default function BasketPage() {
       )}
 
       <div className="container mx-auto w-full px-2 lg:px-2 grid grid-cols-1">
-        <div className="col-span-2 pb-80">
+        <div className="col-span-2 pb-60">
           <BasketItemsList
             onQuantityChange={handleQuantityChange}
             onRemove={handleRemoveItem}
           />
         </div>
-
         <OrderSummary
-          totalItems={groupedItems.reduce(
-            (sum, item) => sum + item.quantity,
-            0
-          )}
-          totalPrice={totalPrice}
           isSignedIn={isSignedIn}
           isLoading={isLoading}
           onCheckout={handleReservation}

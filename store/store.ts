@@ -1,5 +1,4 @@
 // store/store.ts
-
 import { Product, BasketItem, Variant } from '@/types';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
@@ -52,7 +51,7 @@ const useBasketStore = create<BasketState>()(
           };
         }),
 
-      removeItem: (productId: string, variantSize: string) =>
+      removeItem: (productId, variantSize) =>
         set((state) => ({
           items: state.items.reduce((acc, item) => {
             if (
@@ -62,7 +61,7 @@ const useBasketStore = create<BasketState>()(
               if (item.quantity > 1) {
                 acc.push({ ...item, quantity: item.quantity - 1 });
               }
-              // if quantity === 1, item is removed (not pushed)
+              // remove if quantity === 1
             } else {
               acc.push(item);
             }
@@ -70,8 +69,7 @@ const useBasketStore = create<BasketState>()(
           }, [] as BasketItem[]),
         })),
 
-      // Fixed: now requires variantSize to remove the specific variant
-      removeAllOfItem: (productId: string, variantSize: string) =>
+      removeAllOfItem: (productId, variantSize) =>
         set((state) => ({
           items: state.items.filter(
             (item) =>
@@ -82,12 +80,7 @@ const useBasketStore = create<BasketState>()(
           ),
         })),
 
-      // Fixed: accepts variantSize now
-      updateItemQuantity: (
-        productId: string,
-        variantSize: string,
-        quantity: number
-      ) =>
+      updateItemQuantity: (productId, variantSize, quantity) =>
         set((state) => ({
           items: state.items.map((item) =>
             item.product._id === productId && item.variant.size === variantSize
@@ -103,12 +96,11 @@ const useBasketStore = create<BasketState>()(
 
       getTotalPrice: () =>
         get().items.reduce(
-          (total, item) => total + (item.product.price ?? 0) * item.quantity,
+          (total, item) => total + item.variant.price * item.quantity,
           0
         ),
 
-      // Fixed: now accepts variantSize, counts quantity of that variant only
-      getItemCount: (productId: string, variantSize: string) => {
+      getItemCount: (productId, variantSize) => {
         const item = get().items.find(
           (item) =>
             item.product._id === productId && item.variant.size === variantSize
@@ -125,24 +117,20 @@ const useBasketStore = create<BasketState>()(
               (prod) => prod._id === item.product._id
             )?.stock;
 
-            if (updatedStock !== undefined) {
-              return {
-                ...item,
-                product: {
-                  ...item.product,
-                  stock: updatedStock,
-                },
-                quantity: Math.min(item.quantity, updatedStock),
-              };
-            }
+            const newStock = updatedStock ?? item.variant.stock;
 
-            return item;
+            return {
+              ...item,
+              variant: {
+                ...item.variant,
+                stock: newStock,
+              },
+              quantity: Math.min(item.quantity, newStock),
+            };
           }),
         })),
     }),
-    {
-      name: 'basket-store',
-    }
+    { name: 'basket-store' }
   )
 );
 
