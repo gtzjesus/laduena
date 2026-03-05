@@ -297,27 +297,28 @@ SCREENSHOTS EMPLOYEE POV:
 
     Point of Sale
 
-<img width="564" height="1259" alt="dashy" src="https://github.com/user-attachments/assets/874e6670-4855-4e9e-9837-f35b4f4780ef" />
+<img width="559" height="1260" alt="pos1" src="https://github.com/user-attachments/assets/b0953661-3c3a-496d-83d8-13a6f257050f" />
+<img width="566" height="1259" alt="pos2" src="https://github.com/user-attachments/assets/6c554566-8797-4701-b25b-4a29a0afcfc5" />
 
     Inventory Management
     
-<img width="565" height="1264" alt="inv" src="https://github.com/user-attachments/assets/0236f6f4-089b-4f11-af45-7b04b482adc7" />
+<img width="566" height="1263" alt="inv" src="https://github.com/user-attachments/assets/131ec40a-3d60-4110-81b8-b35a8253c8d8" />
 
+      Add New Item window
+
+<img width="568" height="1258" alt="add" src="https://github.com/user-attachments/assets/aa85ebc1-1f3a-4706-a09e-6132092e1403" />
+   
     Single Inventory page (can update)
-    
-<img width="561" height="887" alt="editabe" src="https://github.com/user-attachments/assets/5626a544-3979-4a79-b88b-45e3e599c452" />
+
+<img width="563" height="1256" alt="single" src="https://github.com/user-attachments/assets/a27f3234-c47d-4b6c-9238-f2aba852228c" />
 
     Orders page
     
-<img width="565" height="1259" alt="orders" src="https://github.com/user-attachments/assets/42db67ff-e00f-4c5d-a060-d21f0c88d270" />
+<img width="563" height="1261" alt="orders" src="https://github.com/user-attachments/assets/943e3b88-480b-49f5-83cd-ad09113f5b4b" />
 
-    Order page
+      Settings page
 
-<img width="564" height="1121" alt="order" src="https://github.com/user-attachments/assets/a88545dc-841b-41ef-a6e7-c99563599d92" />
-
-    QR Code page (creates QR codes for every product to be scanned at POS page
-    
-<img width="562" height="1204" alt="QR" src="https://github.com/user-attachments/assets/455e8f3e-df61-4d84-aa97-65f9a0c1af0d" />
+<img width="557" height="1249" alt="sett" src="https://github.com/user-attachments/assets/e4d53e62-7fae-4d10-95b1-77838eae2d88" />
 
 Future Improvements
 
