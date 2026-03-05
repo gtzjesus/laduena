@@ -1,6 +1,10 @@
-    Fireworks E-Commerce Management and Reservation System
+      La Dueña – Business Management & POS System (V2)
 
-A full-stack web commerce platform for managing retail fireworks sales, customer transactions, and complete business operations including inventory, revenue tracking, and administrative analytics.
+A second-generation full-stack commerce and operations platform designed for complete retail business control.
+
+La Dueña V2 is an evolved version of the original system — rebuilt with enhanced UI/UX, expanded inventory controls, improved search performance, and deeper administrative capabilities.
+
+This system is built for real-world retail operations requiring speed, reliability, and precision.
 
 This system provides:
 
@@ -18,40 +22,56 @@ This system provides:
 
 WEB IS LIVE AT:
 
-    elpasokaboom.com
-    elpasokaboom.com/admin/pos
+    laduena.store
+    laduena.store/admin/pos
 
 Overview
 
-This project was designed and built as a production-style commerce system that handles:
+La Dueña V2 is a comprehensive retail management system that handles:
 
-    Client-side operations
-    
-    Account registration & login
-    
-    Secure product browsing
-    
-    Shopping cart functionality
-    
-    Checkout process
-    
+Customer-Side Experience
+
+    Secure account registration & login
+
+    Modern responsive UI
+
+    Product browsing with optimized search
+
+    Dynamic category filtering
+
+    Real-time shopping cart updates
+
+    Secure checkout workflow
+
     Order history tracking
+
+Employee & Administrative Operations
     
-    Owner/Admin operations
+    Full Point of Sale (POS) system
     
-    Inventory management
+    Advanced inventory management
     
-    Product CRUD operations
+    Real-time stock adjustments
     
-    Sales reporting & analytics
+    Add inventory
+    
+    Subtract inventory
+    
+    Edit product details
+    
+    Delete products
+    
+    Update stock quantities instantly
+    
+    Order management & status control
+    
+    Sales reporting
     
     Revenue tracking
     
-    User management
+    QR code generation for POS scanning
     
-    Order processing
-    
-    The system emphasizes security, scalability, clean architecture, and database efficiency.
+    Role-based access control
 
 Tech Stack
 
@@ -62,6 +82,8 @@ Frontend
     TypeScript
     
     Server Components
+    
+    Responsive UI architecture
 
 Backend
 
@@ -71,6 +93,8 @@ Backend
     
     RESTful API design
 
+    Secure authentication & authorization middleware
+
 Database & CMS
 
     Sanity (Headless CMS)
@@ -79,36 +103,128 @@ Database & CMS
     
     Asset management for image uploads
 
-Features
+DevOps & Tooling
 
-    Product search and filtering
+    Git version control
+    
+    REST best practices
+    
+    Modular service structure
+
+What’s New in V2
+
+La Dueña V2 introduces major system upgrades:
+
+    Improved UI/UX
+    
+    Cleaner interface
+    
+    Faster interactions
+    
+    Better visual hierarchy
+    
+    Optimized mobile responsiveness
+    
+    Streamlined admin workflows
+
+    Advanced Inventory Controls
+    
+    Live quantity adjustments
+    
+    Add / subtract inventory directly from dashboard
+    
+    Edit product information dynamically
+    
+    Delete inventory safely
+    
+    Improved stock tracking accuracy
+
+    Enhanced Search System
+    
+    Faster search queries
+    
+    Better filtering logic
+    
+    Improved product discovery
+    
+    Refactored Architecture
+    
+    Cleaner backend modularization
+    
+    Improved API structure
+    
+    Optimized database querying
+    
+    Better separation of concerns
+
+This version is built to be client-ready and scalable for high-volume seasonal operations.
+
+Core Features
+
+Commerce
+
+    Product search & filtering
+    
+    Category navigation
     
     Real-time cart updates
     
-    Secure checkout workflow
+    Order placement & tracking
     
-    Order confirmation & tracking
+    Secure authentication system
+
+Point of Sale (POS)
+
+    Scan products via QR code
     
-    Admin Dashboard
+    Fast transaction processing
     
-    Inventory tracking with stock alerts
+    Direct inventory deduction
     
+    Employee-access interface
+
+Inventory Management
+
+    Create products (CRUD)
+    
+    Edit product details
+    
+    Delete products
+    
+    Adjust stock quantities
+    
+    Track stock levels
+    
+    Manage categories
+
+Analytics & Reporting
+
     Revenue monitoring
     
-    Sales analytics
+    Sales tracking
     
-    User account management
-    
-    Order status control
-    
-    Technical Highlights
-    
-    Designed scalable database schema for transactional integrity
-    
-    Implemented optimized SQL queries for performance
-    
-    Modular backend structure for maintainability
+    Order management dashboard
 
+    Performance insights
+
+Architecture & Scalability
+
+La Dueña V2 was built with scalability and reliability in mind:
+
+    Stateless API design
+    
+    Optimized query indexing
+    
+    Pagination for large datasets
+    
+    Clean database schema for transactional integrity
+    
+    Modular backend architecture
+    
+    Separation between presentation and data layers
+    
+Designed to handle peak seasonal sales traffic efficiently.
+    
 Code version control using Git
 
     Separation of concerns between frontend and backend
@@ -131,12 +247,28 @@ Testing
 
     Manual functional testing
     
-    Edge case validation
+    API endpoint validation (Postman)
     
-    Input validation testing
+    Edge case scenario testing
     
-    API endpoint testing (Postman)
+    Inventory update validation
+    
+    Role-based access testing
 
+What This Version Represents
+
+La Dueña V2 represents:
+
+    Improved system maturity
+    
+    Stronger UI/UX execution
+    
+    Full CRUD operational control
+    
+    Real-world retail optimization
+    
+    Production-style architecture refinement
+    
 
 
 SCREENSHOTS CUSTOMER POV:
@@ -187,40 +319,35 @@ SCREENSHOTS EMPLOYEE POV:
     
 <img width="562" height="1204" alt="QR" src="https://github.com/user-attachments/assets/455e8f3e-df61-4d84-aa97-65f9a0c1af0d" />
 
-What I Learned
-
-    Building secure transactional systems
-    
-    Implementing authentication and authorization
-    
-    Designing relational databases
-    
-    Writing scalable backend APIs
-    
-    Debugging production-style edge cases
-    
-    Managing full lifecycle development
-
 Future Improvements
 
     Payment gateway integration (Stripe / PayPal)
     
-    Automated reporting exports (CSV/PDF)
+    Automated export reports (CSV / PDF)
     
-    Unit & integration testing suite
+    Full automated testing suite
     
     Docker containerization
     
-    CI/CD pipeline
+    CI/CD deployment pipeline
+    
+    Multi-location support
+    
+    Advanced analytics dashboard
 
-    Installation
-
-git clone https://github.com/yourusername/fireworks-ecommerce.git
-cd fireworks-ecommerce
+Installation
+    git clone https://github.com/yourusername/la-duena-v2.git
+    cd la-duena-v2
 Backend Setup
-# Install dependencies
+    # Install dependencies
+    npm install
+
 # Configure environment variables
-# Run server
-Frontend Setup
-# Install dependencies
+# Add SANITY credentials
+# Add JWT secrets
+
 # Run development server
+npm run dev
+    Frontend Setup
+npm install
+npm run dev
