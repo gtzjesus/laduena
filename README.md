@@ -275,23 +275,23 @@ SCREENSHOTS CUSTOMER POV:
 
     Home page
 
-<img width="545" height="1253" alt="home" src="https://github.com/user-attachments/assets/ff9a354a-5ea9-47f8-9134-4568706162f6" />
+<img width="561" height="1262" alt="home" src="https://github.com/user-attachments/assets/23bf255e-98fe-4d15-93af-d437f0b07d6a" />
 
     Shopping cart
-
-<img width="562" height="1261" alt="basker" src="https://github.com/user-attachments/assets/9f966423-8d2b-463b-b681-5595fa30c1fa" />
+    
+<img width="565" height="1262" alt="shop" src="https://github.com/user-attachments/assets/14dc850b-35fa-4b3a-b272-785988e026cf" />
 
     Product page
 
-<img width="556" height="1261" alt="prod" src="https://github.com/user-attachments/assets/5fbc0f1b-830a-4046-b0be-1612b83ad80f" />
+<img width="566" height="1267" alt="prod" src="https://github.com/user-attachments/assets/94b58041-d52b-4e04-8b46-6c80df2c0ceb" />
 
-    Categories section
+    Hours page
+    
+<img width="562" height="1262" alt="hours" src="https://github.com/user-attachments/assets/0842161f-4dd2-4630-a21e-a3778cf943d5" />
 
-<img width="562" height="1211" alt="cats" src="https://github.com/user-attachments/assets/41589ce4-eb81-4a53-83bd-67d283c51f2f" />
-
-    Search popup
-
-<img width="564" height="1264" alt="search" src="https://github.com/user-attachments/assets/bfd84de0-7f5c-404a-8b19-bc058d81a073" />
+      Menu page
+      
+<img width="565" height="1265" alt="menu" src="https://github.com/user-attachments/assets/bcad85b1-6a8c-4794-a2cf-06f65139b839" />
 
 SCREENSHOTS EMPLOYEE POV:
 
